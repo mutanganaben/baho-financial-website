@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { CtaBanner } from "@/components/home/cta-banner";
+import { fetchApi } from "@/lib/api";
 import {
   MapPin,
   Phone,
@@ -14,7 +14,7 @@ import {
   Clock,
   Send,
   CheckCircle2,
-  Building2,
+  AlertCircle,
 } from "lucide-react";
 
 export default function ContactPage() {
@@ -26,18 +26,83 @@ export default function ContactPage() {
     message: "",
   });
 
+  const [fieldErrors, setFieldErrors] = useState<{
+    phoneNumber?: string;
+    message?: string;
+  }>({});
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Phone input handler for Rwandan numbers
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (val.startsWith("+")) {
+      val = "+" + val.slice(1).replace(/\D/g, "");
+    } else {
+      val = val.replace(/\D/g, "");
+    }
+    val = val.slice(0, 13);
+    setFormData((prev) => ({ ...prev, phoneNumber: val }));
+    if (fieldErrors.phoneNumber) {
+      setFieldErrors((prev) => ({ ...prev, phoneNumber: undefined }));
+    }
+  };
+
+  // Client-side validation before sending request
+  const validateForm = (): boolean => {
+    const errors: { phoneNumber?: string; message?: string } = {};
+
+    // Validate phone number format
+    const cleanPhone = formData.phoneNumber.replace(/\s+/g, "");
+    if (!/^(\+?250|0)?7[2389]\d{7}$/.test(cleanPhone)) {
+      errors.phoneNumber =
+        "Please enter a valid Rwandan mobile number (e.g. +250 788 123 456 or 0788123456).";
+    }
+
+    // Validate message length (minimum 10 characters)
+    if (formData.message.trim().length < 10) {
+      errors.message = "Message must be at least 10 characters long.";
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    const payload = {
+      fullName: formData.fullName,
+      email: formData.emailAddress,
+      phone: formData.phoneNumber,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
+    try {
+      await fetchApi<{ success: boolean }>("/contacts", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+
       setSubmitted(true);
-    }, 1000);
+    } catch (err: any) {
+      console.error("Contact message submission error:", err);
+      setErrorMessage(
+        err.message || "Failed to send your message. Please check your details and try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -65,7 +130,7 @@ export default function ContactPage() {
           </Container>
         </section>
 
-        {/* Section 2: Contact Form & HQ Info Grid (Matching Figma Reference Screenshot) */}
+        {/* Section 2: Contact Form & HQ Info Grid */}
         <section className="py-20 lg:py-24 bg-white border-b border-slate-200/70">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -92,7 +157,7 @@ export default function ContactPage() {
                       Message Sent Successfully!
                     </h3>
                     <p className="text-emerald-800 text-base max-w-md mx-auto">
-                      Thank you for contacting BAHO Financial. Our client relations team has received your message and will respond within 24 hours.
+                      Thank you for contacting BAHO Financial. Your message has been stored in our database and our client relations team will respond within 24 hours.
                     </p>
                     <div className="pt-2">
                       <Button
@@ -115,11 +180,19 @@ export default function ContactPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Error Banner */}
+                    {errorMessage && (
+                      <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4 flex items-start space-x-3 text-rose-800 text-sm">
+                        <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+                        <div className="font-medium">{errorMessage}</div>
+                      </div>
+                    )}
+
                     {/* Full Name & Phone Number Row */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label className="block text-sm font-bold text-slate-800">
-                          Full Name
+                          Full Name *
                         </label>
                         <input
                           type="text"
@@ -135,28 +208,34 @@ export default function ContactPage() {
 
                       <div className="space-y-2">
                         <label className="block text-sm font-bold text-slate-800">
-                          Phone Number
+                          Phone Number *
                         </label>
                         <input
                           type="tel"
                           required
-                          placeholder="+250 7XX XXX XXX"
+                          maxLength={13}
+                          placeholder="+250 78X XXX XXX"
                           value={formData.phoneNumber}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              phoneNumber: e.target.value,
-                            })
-                          }
-                          className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white transition-all text-sm font-medium"
+                          onChange={handlePhoneChange}
+                          className={`w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white transition-all text-sm font-medium ${
+                            fieldErrors.phoneNumber
+                              ? "border-rose-400 ring-1 ring-rose-400"
+                              : "border-slate-200"
+                          }`}
                         />
+                        {fieldErrors.phoneNumber && (
+                          <p className="text-xs font-semibold text-rose-600 flex items-center pt-0.5">
+                            <AlertCircle className="w-3.5 h-3.5 inline mr-1 flex-shrink-0" />
+                            <span>{fieldErrors.phoneNumber}</span>
+                          </p>
+                        )}
                       </div>
                     </div>
 
                     {/* Email Address */}
                     <div className="space-y-2">
                       <label className="block text-sm font-bold text-slate-800">
-                        Email Address
+                        Email Address *
                       </label>
                       <input
                         type="email"
@@ -176,7 +255,7 @@ export default function ContactPage() {
                     {/* Subject Dropdown */}
                     <div className="space-y-2">
                       <label className="block text-sm font-bold text-slate-800">
-                        Subject
+                        Subject *
                       </label>
                       <select
                         required
@@ -205,18 +284,34 @@ export default function ContactPage() {
                     {/* Message Area */}
                     <div className="space-y-2">
                       <label className="block text-sm font-bold text-slate-800">
-                        Message
+                        Message *
                       </label>
                       <textarea
                         required
                         rows={5}
-                        placeholder="How can we help you?"
+                        placeholder="How can we help you? (Minimum 10 characters)"
                         value={formData.message}
-                        onChange={(e) =>
-                          setFormData({ ...formData, message: e.target.value })
-                        }
-                        className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white transition-all text-sm font-medium resize-none"
+                        onChange={(e) => {
+                          setFormData({ ...formData, message: e.target.value });
+                          if (fieldErrors.message) {
+                            setFieldErrors((prev) => ({
+                              ...prev,
+                              message: undefined,
+                            }));
+                          }
+                        }}
+                        className={`w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white transition-all text-sm font-medium resize-none ${
+                          fieldErrors.message
+                            ? "border-rose-400 ring-1 ring-rose-400"
+                            : "border-slate-200"
+                        }`}
                       />
+                      {fieldErrors.message && (
+                        <p className="text-xs font-semibold text-rose-600 flex items-center pt-0.5">
+                          <AlertCircle className="w-3.5 h-3.5 inline mr-1 flex-shrink-0" />
+                          <span>{fieldErrors.message}</span>
+                        </p>
+                      )}
                     </div>
 
                     {/* Submit Button */}
@@ -325,20 +420,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Building / Office Image Container */}
-                <div className="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-100 border border-slate-200 shadow-md">
-                  <Image
-                    src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop"
-                    alt="BAHO Financial Head Office Building"
-                    fill
-                    className="object-cover object-center"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 text-white text-xs font-bold flex items-center justify-between bg-slate-950/80 backdrop-blur-md p-3 rounded-xl border border-white/10">
-                    <span>Kigali Head Office (Kabuga)</span>
-                    <Building2 className="w-4 h-4 text-baho-gold" />
-                  </div>
-                </div>
+
               </div>
 
             </div>

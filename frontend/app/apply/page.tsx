@@ -7,22 +7,20 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
+import { fetchApi } from "@/lib/api";
 import {
   CheckCircle2,
   FileText,
-  Building2,
   User,
-  Phone,
-  Mail,
-  MapPin,
   Send,
   ShieldCheck,
   ArrowLeft,
+  AlertCircle,
 } from "lucide-react";
 
 function ApplyFormContent() {
   const searchParams = useSearchParams();
-  const initialProduct = searchParams.get("product") || "business";
+  const initialProduct = searchParams.get("product") || "business-growth";
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -37,8 +35,14 @@ function ApplyFormContent() {
     loanPurpose: "",
   });
 
+  const [fieldErrors, setFieldErrors] = useState<{
+    nationalId?: string;
+    phoneNumber?: string;
+  }>({});
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [referenceId, setReferenceId] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const prodParam = searchParams.get("product");
@@ -47,22 +51,102 @@ function ApplyFormContent() {
     }
   }, [searchParams]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handler for National ID: strictly 16 numeric digits only
+  const handleNationalIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numericValue = e.target.value.replace(/\D/g, "").slice(0, 16);
+    setFormData((prev) => ({ ...prev, nationalId: numericValue }));
+    if (fieldErrors.nationalId) {
+      setFieldErrors((prev) => ({ ...prev, nationalId: undefined }));
+    }
+  };
+
+  // Handler for Phone Number: digits and leading '+' only
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (val.startsWith("+")) {
+      val = "+" + val.slice(1).replace(/\D/g, "");
+    } else {
+      val = val.replace(/\D/g, "");
+    }
+    val = val.slice(0, 13);
+    setFormData((prev) => ({ ...prev, phoneNumber: val }));
+    if (fieldErrors.phoneNumber) {
+      setFieldErrors((prev) => ({ ...prev, phoneNumber: undefined }));
+    }
+  };
+
+  // Client-side validation before dispatching HTTP request
+  const validateForm = (): boolean => {
+    const errors: { nationalId?: string; phoneNumber?: string } = {};
+
+    // National ID check: must be exactly 16 numeric digits
+    if (!/^\d{16}$/.test(formData.nationalId)) {
+      errors.nationalId =
+        "National ID must be exactly 16 numeric digits (e.g. 1199880011223344).";
+    }
+
+    // Rwanda Phone Number check: +25078XXXXXXX or 078XXXXXXX
+    const cleanPhone = formData.phoneNumber.replace(/\s+/g, "");
+    if (!/^(\+?250|0)?7[2389]\d{7}$/.test(cleanPhone)) {
+      errors.phoneNumber =
+        "Please enter a valid Rwandan mobile number (e.g. +250 788 123 456 or 0788123456).";
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
+
+    // Run client-side validation
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate Loan Application submission and Reference ID generation
-    setTimeout(() => {
-      const randomRef = "BAHO-2026-" + Math.floor(10000 + Math.random() * 90000);
+    // Map product category dropdown values to backend product slugs
+    let productSlug = formData.productCategory;
+    if (productSlug === "personal") productSlug = "personal-loan";
+    if (productSlug === "startup-business") productSlug = "startup-business-loan";
+    if (productSlug === "business-growth") productSlug = "business-growth-loan";
+
+    const payload = {
+      fullName: formData.fullName,
+      nationalId: formData.nationalId,
+      phone: formData.phoneNumber,
+      email: formData.emailAddress.trim() || undefined,
+      district: formData.provinceDistrict,
+      productSlug,
+      amountRequested: parseInt(formData.loanAmount, 10),
+      durationMonths: parseInt(formData.repaymentTerm, 10),
+      preferredBranch: formData.preferredBranch,
+      loanPurpose: formData.loanPurpose,
+    };
+
+    try {
+      await fetchApi<{ success: boolean }>("/applications", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error("Loan application submission error:", err);
+      setErrorMessage(
+        err.message || "Failed to submit loan request. Please verify your details."
+      );
+    } finally {
       setIsSubmitting(false);
-      setReferenceId(randomRef);
-    }, 1200);
+    }
   };
 
   return (
     <div className="space-y-12">
-      {referenceId ? (
-        /* Confirmation Screen */
+      {submitted ? (
+        /* Clean Confirmation Screen */
         <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/90 shadow-xl max-w-3xl mx-auto text-center space-y-6">
           <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-md">
             <CheckCircle2 className="w-12 h-12 stroke-[2.5]" />
@@ -75,22 +159,9 @@ function ApplyFormContent() {
             <h2 className="text-3xl sm:text-4xl font-extrabold text-baho-navy-dark">
               Thank You, {formData.fullName}!
             </h2>
-            <p className="text-slate-600 text-base max-w-lg mx-auto">
-              Your loan application has been received and routed to our credit underwriting team.
+            <p className="text-slate-600 text-base max-w-lg mx-auto leading-relaxed">
+              We have received your loan application. Our credit underwriting team will review your application and contact you via phone call shorty.
             </p>
-          </div>
-
-          {/* Reference ID Box */}
-          <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl max-w-md mx-auto space-y-2">
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Application Reference ID
-            </div>
-            <div className="text-3xl font-black text-baho-navy tracking-wider font-mono">
-              {referenceId}
-            </div>
-            <div className="text-xs text-slate-500">
-              Please save this ID to track your application status.
-            </div>
           </div>
 
           {/* Next Steps List */}
@@ -98,18 +169,18 @@ function ApplyFormContent() {
             <h4 className="text-sm font-extrabold text-baho-navy uppercase tracking-wider">
               What Happens Next?
             </h4>
-            <ul className="space-y-2 text-xs font-medium text-slate-700">
-              <li className="flex items-center space-x-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />
-                <span>Our credit officer will review your details within 24 hours.</span>
+            <ul className="space-y-2.5 text-xs font-medium text-slate-700">
+              <li className="flex items-center space-x-2.5">
+                <span className="w-2 h-2 rounded-full bg-blue-600 flex-shrink-0" />
+                <span>Our credit officer will review your application details.</span>
               </li>
-              <li className="flex items-center space-x-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />
-                <span>You will receive an SMS and phone call to confirm documentation.</span>
+              <li className="flex items-center space-x-2.5">
+                <span className="w-2 h-2 rounded-full bg-blue-600 flex-shrink-0" />
+                <span>You will receive a phone call from our team to confirm details.</span>
               </li>
-              <li className="flex items-center space-x-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />
-                <span>Funds will be disbursed upon final credit committee approval.</span>
+              <li className="flex items-center space-x-2.5">
+                <span className="w-2 h-2 rounded-full bg-blue-600 flex-shrink-0" />
+                <span>Fast credit evaluation and disbursement upon approval.</span>
               </li>
             </ul>
           </div>
@@ -144,6 +215,14 @@ function ApplyFormContent() {
             </p>
           </div>
 
+          {/* Validation Error Banner */}
+          {errorMessage && (
+            <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4 flex items-start space-x-3 text-rose-800 text-sm">
+              <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+              <div className="font-medium">{errorMessage}</div>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Step 1: Personal Information */}
             <div className="space-y-6">
@@ -176,13 +255,22 @@ function ApplyFormContent() {
                   <input
                     type="text"
                     required
-                    placeholder="1 19XX 8 XXXXXXX X XX"
+                    maxLength={16}
+                    placeholder="1199880011223344 (16 digits)"
                     value={formData.nationalId}
-                    onChange={(e) =>
-                      setFormData({ ...formData, nationalId: e.target.value })
-                    }
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white text-sm font-medium"
+                    onChange={handleNationalIdChange}
+                    className={`w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white text-sm font-medium ${
+                      fieldErrors.nationalId
+                        ? "border-rose-400 ring-1 ring-rose-400"
+                        : "border-slate-200"
+                    }`}
                   />
+                  {fieldErrors.nationalId && (
+                    <p className="text-xs font-semibold text-rose-600 flex items-center pt-0.5">
+                      <AlertCircle className="w-3.5 h-3.5 inline mr-1 flex-shrink-0" />
+                      <span>{fieldErrors.nationalId}</span>
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -192,18 +280,27 @@ function ApplyFormContent() {
                   <input
                     type="tel"
                     required
-                    placeholder="+250 7XX XXX XXX"
+                    maxLength={13}
+                    placeholder="+250 78X XXX XXX"
                     value={formData.phoneNumber}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phoneNumber: e.target.value })
-                    }
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white text-sm font-medium"
+                    onChange={handlePhoneChange}
+                    className={`w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white text-sm font-medium ${
+                      fieldErrors.phoneNumber
+                        ? "border-rose-400 ring-1 ring-rose-400"
+                        : "border-slate-200"
+                    }`}
                   />
+                  {fieldErrors.phoneNumber && (
+                    <p className="text-xs font-semibold text-rose-600 flex items-center pt-0.5">
+                      <AlertCircle className="w-3.5 h-3.5 inline mr-1 flex-shrink-0" />
+                      <span>{fieldErrors.phoneNumber}</span>
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
                   <label className="block text-sm font-bold text-slate-800">
-                    Email Address
+                    Email Address (Optional)
                   </label>
                   <input
                     type="email"
@@ -261,9 +358,9 @@ function ApplyFormContent() {
                     className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white text-sm font-medium"
                   >
                     <option value="cash-advance">Cash Advance (RWF 50,000 – 500,000)</option>
-                    <option value="personal">Personal Loan (RWF 200,000 – 2,000,000)</option>
-                    <option value="startup-business">Startup Business Loan (RWF 500,000 – 5,000,000)</option>
-                    <option value="business-growth">Business Growth Loan (RWF 2,000,000 – 20,000,000)</option>
+                    <option value="personal-loan">Personal Loan (RWF 200,000 – 2,000,000)</option>
+                    <option value="startup-business-loan">Startup Business Loan (RWF 500,000 – 5,000,000)</option>
+                    <option value="business-growth-loan">Business Growth Loan (RWF 2,000,000 – 20,000,000)</option>
                   </select>
                 </div>
 
@@ -301,10 +398,11 @@ function ApplyFormContent() {
                     className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white text-sm font-medium"
                   >
                     <option value="1">1 Month</option>
+                    <option value="2">2 Months</option>
                     <option value="3">3 Months</option>
+                    <option value="4">4 Months</option>
+                    <option value="5">5 Months</option>
                     <option value="6">6 Months</option>
-                    <option value="8">8 Months</option>
-                    <option value="12">12 Months</option>
                   </select>
                 </div>
 
