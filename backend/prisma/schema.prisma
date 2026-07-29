@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductCategory {
+  CASH_ADVANCE
+  PERSONAL_LOAN
+  STARTUP_BUSINESS_LOAN
+  BUSINESS_GROWTH_LOAN
+}
+
+enum Province {
+  KIGALI
+  EAST
+  WEST
+  NORTH
+  SOUTH
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+}
+
+enum ApplicationStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  CREDIT_OFFICER
+}
+
+model Product {
+  id              String          @id @default(uuid())
+  name            String
+  slug            String          @unique
+  category        ProductCategory
+  description     String
+  minAmount       Int
+  maxAmount       Int
+  interestRate    Float
+  maxTenureMonths Int
+  isActive        Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("products")
+}
+
+model Branch {
+  id           String   @id @default(uuid())
+  name         String
+  code         String   @unique
+  province     Province
+  district     String
+  address      String
+  phone        String
+  email        String?
+  openingHours String
+  latitude     Float?
+  longitude    Float?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("branches")
+}
+
+model ContactMessage {
+  id        String        @id @default(uuid())
+  fullName  String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@map("contact_messages")
+}
+
+model Application {
+  id              String            @id @default(uuid())
+  referenceNumber String            @unique
+  productSlug     String
+  amountRequested Int
+  durationMonths  Int
+  fullName        String
+  email           String?
+  phone           String
+  nationalId      String
+  district        String
+  loanPurpose     String
+  preferredBranch String?
+  notes           String?
+  status          ApplicationStatus @default(PENDING)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("applications")
+}
+
+model AdminUser {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  fullName  String
+  role      AdminRole @default(CREDIT_OFFICER)
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("admin_users")
+}

@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
+import { fetchApi, ApiProduct } from "@/lib/api";
 
 import {
   Briefcase,
@@ -15,53 +16,35 @@ import {
   Check,
   ArrowRight,
   ChevronDown,
-  HelpCircle,
   LucideIcon,
-  Star,
-  ShieldCheck,
-  Clock,
   FileText,
+  AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 
-export interface LoanProduct {
-  id: string;
-  title: string;
-  categoryTag: string;
-  description: string;
-  icon: LucideIcon;
-  theme: {
-    iconBg: string;
-    iconColor: string;
-    badgeBg: string;
-    badgeText: string;
-    buttonBg: string;
-  };
-  features: string[];
-  requirements: string[];
-  applyLink: string;
-}
-
-const PRODUCTS: LoanProduct[] = [
+const PRODUCT_THEMES: Record<
+  string,
   {
-    id: "cash-advance",
-    title: "Cash Advance",
-    categoryTag: "Same-day approval",
-    description:
-      "Instant short-term cash for urgent daily needs.",
+    icon: LucideIcon;
+    categoryTag: string;
+    theme: {
+      iconBg: string;
+      iconColor: string;
+      badgeBg: string;
+      badgeText: string;
+    };
+    requirements: string[];
+  }
+> = {
+  "cash-advance": {
     icon: Zap,
+    categoryTag: "Same-day approval",
     theme: {
       iconBg: "bg-rose-50",
       iconColor: "text-rose-600",
       badgeBg: "bg-rose-100",
       badgeText: "text-rose-800",
-      buttonBg: "bg-[#D97706] hover:bg-[#B45309] text-white",
     },
-    features: [
-      "Repayment in 1–3 months",
-      "Minimal paperwork required",
-      "No hidden fees",
-      "RWF 50,000 – 500,000",
-    ],
     requirements: [
       "Valid Rwandan National ID or Passport",
       "Proof of income or active business",
@@ -69,28 +52,16 @@ const PRODUCTS: LoanProduct[] = [
       "Completed BAHO loan application form",
       "Two passport-size photographs",
     ],
-    applyLink: "/apply?product=cash-advance",
   },
-  {
-    id: "personal-loan",
-    title: "Personal Loan",
-    categoryTag: "Decision within 24 hours",
-    description:
-      "Finance education, health, or household improvements.",
+  "personal-loan": {
     icon: UserCheck,
+    categoryTag: "Decision within 24 hours",
     theme: {
       iconBg: "bg-emerald-50",
       iconColor: "text-emerald-600",
       badgeBg: "bg-emerald-100",
       badgeText: "text-emerald-800",
-      buttonBg: "bg-[#D97706] hover:bg-[#B45309] text-white",
     },
-    features: [
-      "Repayment up to 12 months",
-      "Competitive 10% monthly rate",
-      "Dedicated credit officer",
-      "RWF 200,000 – 2,000,000",
-    ],
     requirements: [
       "Valid Rwandan National ID or Passport",
       "Proof of salary or documented income source",
@@ -99,28 +70,16 @@ const PRODUCTS: LoanProduct[] = [
       "Completed BAHO loan application form",
       "Two passport-size photographs",
     ],
-    applyLink: "/apply?product=personal",
   },
-  {
-    id: "startup-business-loan",
-    title: "Startup Business Loan",
-    categoryTag: "Approved in 48 hours",
-    description:
-      "Kickstart your new business with confidence.",
+  "startup-business-loan": {
     icon: Sprout,
+    categoryTag: "Approved in 48 hours",
     theme: {
       iconBg: "bg-amber-50",
       iconColor: "text-amber-600",
       badgeBg: "bg-amber-100",
       badgeText: "text-amber-800",
-      buttonBg: "bg-[#D97706] hover:bg-[#B45309] text-white",
     },
-    features: [
-      "Repayment up to 18 months",
-      "Business plan review support",
-      "Flexible draw-down schedule",
-      "RWF 500,000 – 5,000,000",
-    ],
     requirements: [
       "Valid Rwandan National ID or Passport",
       "Business plan or operational overview",
@@ -129,28 +88,16 @@ const PRODUCTS: LoanProduct[] = [
       "Completed BAHO loan application form",
       "Two passport-size photographs",
     ],
-    applyLink: "/apply?product=startup-business",
   },
-  {
-    id: "business-growth-loan",
-    title: "Business Growth Loan",
-    categoryTag: "Processing in 3–5 days",
-    description:
-      "Scale your existing business to the next level.",
+  "business-growth-loan": {
     icon: Briefcase,
+    categoryTag: "Processing in 3–5 days",
     theme: {
       iconBg: "bg-blue-50",
       iconColor: "text-blue-600",
       badgeBg: "bg-blue-100",
       badgeText: "text-blue-800",
-      buttonBg: "bg-[#D97706] hover:bg-[#B45309] text-white",
     },
-    features: [
-      "Repayment up to 24 months",
-      "CRB-verified fast processing",
-      "Dedicated relationship manager",
-      "RWF 2,000,000 – 20,000,000",
-    ],
     requirements: [
       "Valid Rwandan National ID or Passport",
       "Proof of business activity (RRA Registration / TIN)",
@@ -159,9 +106,8 @@ const PRODUCTS: LoanProduct[] = [
       "Completed BAHO loan application form",
       "Two passport-size photographs",
     ],
-    applyLink: "/apply?product=business-growth",
   },
-];
+};
 
 const FAQS = [
   {
@@ -192,13 +138,37 @@ const FAQS = [
 ];
 
 export default function FinancingPage() {
+  const [products, setProducts] = useState<ApiProduct[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const loadProducts = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const data = await fetchApi<ApiProduct[]>("/products");
+      setProducts(data);
+    } catch (err: any) {
+      console.error("Failed to load products from server:", err);
+      setErrorMessage(
+        err.message || "Failed to load loan products. Please check your connection."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   const filteredProducts =
     activeTab === "all"
-      ? PRODUCTS
-      : PRODUCTS.filter((product) => product.id === activeTab);
+      ? products
+      : products.filter((product) => product.slug === activeTab);
 
   return (
     <div className="min-h-screen flex flex-col bg-baho-bg">
@@ -242,117 +212,183 @@ export default function FinancingPage() {
                 All Products
               </button>
 
-              {PRODUCTS.map((prod) => (
+              {products.map((prod) => (
                 <button
                   key={prod.id}
                   type="button"
-                  onClick={() => setActiveTab(prod.id)}
+                  onClick={() => setActiveTab(prod.slug)}
                   className={`px-5 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${
-                    activeTab === prod.id
+                    activeTab === prod.slug
                       ? "bg-[#0B1B33] text-white shadow-md"
                       : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80"
                   }`}
                 >
-                  {prod.title}
+                  {prod.name}
                 </button>
               ))}
             </div>
 
-            {/* Products List Grid */}
-            <div className="space-y-12">
-              {filteredProducts.map((product) => {
-                const IconComponent = product.icon;
+            {/* Error Banner State */}
+            {errorMessage && (
+              <div className="bg-rose-50 border border-rose-200 rounded-3xl p-6 max-w-2xl mx-auto text-center space-y-4">
+                <div className="flex items-center justify-center space-x-2 text-rose-800 font-bold">
+                  <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
+                  <span>{errorMessage}</span>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={loadProducts}
+                  className="font-bold border-rose-300 text-rose-900 hover:bg-rose-100"
+                >
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  Retry Connection
+                </Button>
+              </div>
+            )}
 
-                return (
+            {/* Loading Skeleton State */}
+            {isLoading ? (
+              <div className="space-y-8">
+                {[1, 2, 3, 4].map((idx) => (
                   <div
-                    key={product.id}
-                    id={product.id}
-                    className="bg-white rounded-3xl p-8 lg:p-12 border border-slate-200/90 shadow-sm hover:shadow-md transition-all space-y-8"
+                    key={idx}
+                    className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm animate-pulse space-y-6"
                   >
-                    {/* Header Row */}
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-6">
-                      <div className="flex items-start space-x-5">
-                        <div
-                          className={`w-14 h-14 rounded-2xl ${product.theme.iconBg} ${product.theme.iconColor} flex items-center justify-center flex-shrink-0 shadow-sm`}
-                        >
-                          <IconComponent className="w-7 h-7" />
-                        </div>
-                        <div className="space-y-1">
-                          <span
-                            className={`inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${product.theme.badgeBg} ${product.theme.badgeText}`}
-                          >
-                            {product.categoryTag}
-                          </span>
-                          <h2 className="text-3xl font-extrabold text-baho-navy-dark tracking-tight">
-                            {product.title}
-                          </h2>
-                        </div>
+                    <div className="flex items-center space-x-4">
+                      <div className="w-14 h-14 rounded-2xl bg-slate-100" />
+                      <div className="space-y-2">
+                        <div className="h-4 bg-slate-100 rounded w-24" />
+                        <div className="h-7 bg-slate-100 rounded w-48" />
                       </div>
-
-                      <Link href={product.applyLink}>
-                        <Button
-                          variant="gold"
-                          size="lg"
-                          className="font-bold shadow-md"
-                        >
-                          Apply For {product.title}
-                          <ArrowRight className="w-5 h-5 ml-2" />
-                        </Button>
-                      </Link>
                     </div>
-
-                    {/* Description Paragraph */}
-                    <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
-                      {product.description}
-                    </p>
-
-                    {/* 2 Column Layout: Left (KEY FEATURES) & Right (REQUIREMENTS CARD) */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                      {/* Left: Key Features */}
-                      <div className="lg:col-span-6 space-y-4">
-                        <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
-                          KEY FEATURES
-                        </h3>
-
-                        <div className="space-y-3">
-                          {product.features.map((feat, idx) => (
-                            <div
-                              key={idx}
-                              className="flex items-center space-x-3 text-base font-semibold text-slate-800"
-                            >
-                              <div className="w-6 h-6 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
-                                <Check className="w-4 h-4 stroke-[3]" />
-                              </div>
-                              <span>{feat}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Right: Requirements Box (Light slate box matching reference screenshot) */}
-                      <div className="lg:col-span-6 bg-slate-50/90 rounded-2xl p-6 sm:p-8 border border-slate-200/80 space-y-4">
-                        <div className="flex items-center space-x-2 text-baho-navy-dark font-extrabold text-lg">
-                          <FileText className="w-5 h-5 text-baho-gold" />
-                          <h3>Requirements</h3>
-                        </div>
-
-                        <ul className="space-y-2.5">
-                          {product.requirements.map((req, idx) => (
-                            <li
-                              key={idx}
-                              className="flex items-start space-x-3 text-sm font-medium text-slate-700 leading-normal"
-                            >
-                              <span className="w-2 h-2 rounded-full bg-baho-gold mt-1.5 flex-shrink-0" />
-                              <span>{req}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                    <div className="h-4 bg-slate-100 rounded w-3/4" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                      <div className="h-24 bg-slate-100 rounded-2xl" />
+                      <div className="h-24 bg-slate-100 rounded-2xl" />
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            ) : (
+              /* Live Products List Grid */
+              <div className="space-y-12">
+                {filteredProducts.map((product) => {
+                  const meta = PRODUCT_THEMES[product.slug] || {
+                    icon: Zap,
+                    categoryTag: "Standard Financing",
+                    theme: {
+                      iconBg: "bg-blue-50",
+                      iconColor: "text-blue-600",
+                      badgeBg: "bg-blue-100",
+                      badgeText: "text-blue-800",
+                    },
+                    requirements: [
+                      "Valid Rwandan National ID or Passport",
+                      "Proof of income or business statements",
+                      "Completed BAHO loan application form",
+                    ],
+                  };
+
+                  const IconComponent = meta.icon;
+
+                  const dynamicFeatures = [
+                    `Repayment up to ${product.maxTenureMonths} month${product.maxTenureMonths > 1 ? "s" : ""}`,
+                    `Competitive ${product.interestRate}% monthly rate`,
+                    `RWF ${product.minAmount.toLocaleString()} – ${product.maxAmount.toLocaleString()}`,
+                    "No hidden administrative fees",
+                  ];
+
+                  return (
+                    <div
+                      key={product.id}
+                      id={product.slug}
+                      className="bg-white rounded-3xl p-8 lg:p-12 border border-slate-200/90 shadow-sm hover:shadow-md transition-all space-y-8"
+                    >
+                      {/* Header Row */}
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-6">
+                        <div className="flex items-start space-x-5">
+                          <div
+                            className={`w-14 h-14 rounded-2xl ${meta.theme.iconBg} ${meta.theme.iconColor} flex items-center justify-center flex-shrink-0 shadow-sm`}
+                          >
+                            <IconComponent className="w-7 h-7" />
+                          </div>
+                          <div className="space-y-1">
+                            <span
+                              className={`inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${meta.theme.badgeBg} ${meta.theme.badgeText}`}
+                            >
+                              {meta.categoryTag}
+                            </span>
+                            <h2 className="text-3xl font-extrabold text-baho-navy-dark tracking-tight">
+                              {product.name}
+                            </h2>
+                          </div>
+                        </div>
+
+                        <Link href={`/apply?product=${product.slug}`}>
+                          <Button
+                            variant="gold"
+                            size="lg"
+                            className="font-bold shadow-md"
+                          >
+                            Apply For {product.name}
+                            <ArrowRight className="w-5 h-5 ml-2" />
+                          </Button>
+                        </Link>
+                      </div>
+
+                      {/* Description Paragraph */}
+                      <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
+                        {product.description}
+                      </p>
+
+                      {/* 2 Column Layout: Left (KEY FEATURES) & Right (REQUIREMENTS CARD) */}
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        {/* Left: Key Features */}
+                        <div className="lg:col-span-6 space-y-4">
+                          <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                            KEY FEATURES
+                          </h3>
+
+                          <div className="space-y-3">
+                            {dynamicFeatures.map((feat, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center space-x-3 text-base font-semibold text-slate-800"
+                              >
+                                <div className="w-6 h-6 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
+                                  <Check className="w-4 h-4 stroke-[3]" />
+                                </div>
+                                <span>{feat}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Right: Requirements Box */}
+                        <div className="lg:col-span-6 bg-slate-50/90 rounded-2xl p-6 sm:p-8 border border-slate-200/80 space-y-4">
+                          <div className="flex items-center space-x-2 text-baho-navy-dark font-extrabold text-lg">
+                            <FileText className="w-5 h-5 text-baho-gold" />
+                            <h3>Requirements</h3>
+                          </div>
+
+                          <ul className="space-y-2.5">
+                            {meta.requirements.map((req, idx) => (
+                              <li
+                                key={idx}
+                                className="flex items-start space-x-3 text-sm font-medium text-slate-700 leading-normal"
+                              >
+                                <span className="w-2 h-2 rounded-full bg-baho-gold mt-1.5 flex-shrink-0" />
+                                <span>{req}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </Container>
         </section>
 
@@ -408,7 +444,6 @@ export default function FinancingPage() {
             </div>
           </Container>
         </section>
-
 
       </main>
 

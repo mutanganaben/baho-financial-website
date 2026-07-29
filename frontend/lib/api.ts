@@ -10,7 +10,9 @@ export interface ApiProduct {
   minAmount: number;
   maxAmount: number;
   interestRate: number;
+  interestPeriod?: string;
   maxTenureMonths: number;
+  features?: string[];
   isActive: boolean;
   createdAt?: string;
   updatedAt?: string;

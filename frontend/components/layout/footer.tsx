@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/container";
-import { Phone, Mail, MapPin, ArrowRight, ShieldCheck } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowRight, ShieldCheck, Lock } from "lucide-react";
 
 export const Footer: React.FC = () => {
   return (
@@ -42,6 +42,7 @@ export const Footer: React.FC = () => {
               { label: "Branch Locations", href: "/branches" },
               { label: "About Us", href: "/about" },
               { label: "Contact Us", href: "/contact" },
+              { label: "Admin", href: "/admin/login" },
             ].map((link) => (
               <li key={link.href}>
                 <Link
@@ -101,8 +102,15 @@ export const Footer: React.FC = () => {
       </Container>
 
       {/* Copyright Strip */}
-      <Container className="pt-8 text-center text-xs text-slate-500">
+      <Container className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
         <p>© {new Date().getFullYear()} BAHO Financial Ltd. All Rights Reserved.</p>
+        <Link
+          href="/admin/login"
+          className="hover:text-slate-300 transition-colors flex items-center space-x-1.5 text-slate-400 font-semibold"
+        >
+          <Lock className="w-3.5 h-3.5 text-baho-gold" />
+          <span>Admin</span>
+        </Link>
       </Container>
     </footer>
   );
