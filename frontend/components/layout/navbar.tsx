@@ -26,9 +26,9 @@ export const Navbar: React.FC = () => {
         <Container className="flex items-center justify-between h-20">
           {/* Brand Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative w-44 h-12">
+            <div className="relative w-48 h-12">
               <Image
-                src="/baho-logo-horizontal.svg"
+                src="/images/BAHO FINANCIAL LTD.png"
                 alt="BAHO Financial Ltd. Logo"
                 fill
                 priority

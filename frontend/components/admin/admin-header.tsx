@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getAdminUser, clearAdminSession } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import {
   User,
   Settings,
   ChevronDown,
+  ChevronRight,
   Users as UsersIcon,
 } from "lucide-react";
 
@@ -72,10 +74,16 @@ export function AdminHeader({ activePage, title }: AdminHeaderProps) {
   return (
     <header className="bg-[#0B1B33] text-white border-b border-slate-800 sticky top-0 z-40 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
-        {/* Left Brand Title */}
+        {/* Left Brand Title with Official Logo */}
         <Link href="/admin/dashboard" className="flex items-center space-x-3 group">
-          <div className="w-10 h-10 rounded-xl bg-blue-900/50 border border-blue-700/50 flex items-center justify-center text-blue-300 group-hover:scale-105 transition-transform flex-shrink-0">
-            <Building2 className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 transition-transform flex-shrink-0 relative overflow-hidden">
+            <Image
+              src="/images/BAHO FINANCIAL LTD.png"
+              alt="BAHO Financial Ltd. Logo"
+              width={32}
+              height={32}
+              className="object-contain"
+            />
           </div>
           <div>
             <span className="text-base font-black tracking-wider text-white block leading-none">
@@ -242,83 +250,129 @@ export function AdminHeader({ activePage, title }: AdminHeaderProps) {
 
       {/* Mobile Dropdown Navigation Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#071325] border-b border-slate-800 px-6 py-5 space-y-4 animate-in slide-in-from-top-2 duration-200">
+        <div className="lg:hidden bg-white text-slate-800 border-b border-slate-200 px-5 py-5 space-y-4 shadow-xl animate-in slide-in-from-top-2 duration-200">
           {adminUser && (
-            <div className="pb-3 border-b border-slate-800/80 flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-[#132A4F] text-white font-black text-xs flex items-center justify-center border-2 border-blue-500/40 shadow-sm flex-shrink-0">
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/90 flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-full bg-[#0B1B33] text-white font-extrabold text-xs flex items-center justify-center shadow-sm flex-shrink-0">
                 {getInitials(adminUser.fullName)}
               </div>
-              <div className="flex-1">
-                <div className="text-sm font-extrabold text-white">{adminUser.fullName}</div>
-                <div className="text-xs text-slate-400 font-medium">{adminUser.email}</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-bold text-slate-900 truncate">{adminUser.fullName}</div>
+                <div className="text-xs text-slate-500 font-medium truncate">{adminUser.email}</div>
               </div>
-              <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded bg-blue-900/60 text-blue-200 border border-blue-700/50">
-                {adminUser.role}
+              <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-lg bg-blue-50 text-blue-900 border border-blue-200/80 flex-shrink-0">
+                {adminUser.role ? adminUser.role.replace("_", " ") : "ADMIN"}
               </span>
             </div>
           )}
 
-          <nav className="flex flex-col space-y-2">
+          <nav className="flex flex-col space-y-1.5">
             <Link
               href="/admin/dashboard"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-bold transition-colors ${
+              className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activePage === "dashboard"
-                  ? "bg-[#132A4F] text-white border border-blue-500/40 font-black"
-                  : "bg-slate-900/80 text-slate-200 hover:bg-slate-800 border border-slate-800"
+                  ? "bg-[#0B1B33] text-white font-bold shadow-sm"
+                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              <LayoutDashboard className="w-4 h-4" />
-              <span>Dashboard</span>
+              <div className="flex items-center space-x-3">
+                <LayoutDashboard className={`w-4 h-4 ${activePage === "dashboard" ? "text-white" : "text-slate-500"}`} />
+                <span>Dashboard</span>
+              </div>
+              <ChevronRight className={`w-4 h-4 ${activePage === "dashboard" ? "text-white/70" : "text-slate-400"}`} />
             </Link>
 
             <Link
               href="/admin/products"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-bold transition-colors ${
+              className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activePage === "products"
-                  ? "bg-[#132A4F] text-white border border-blue-500/40 font-black"
-                  : "bg-slate-900/80 text-slate-200 hover:bg-slate-800 border border-slate-800"
+                  ? "bg-[#0B1B33] text-white font-bold shadow-sm"
+                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              <Briefcase className="w-4 h-4" />
-              <span>Products</span>
+              <div className="flex items-center space-x-3">
+                <Briefcase className={`w-4 h-4 ${activePage === "products" ? "text-white" : "text-slate-500"}`} />
+                <span>Products</span>
+              </div>
+              <ChevronRight className={`w-4 h-4 ${activePage === "products" ? "text-white/70" : "text-slate-400"}`} />
             </Link>
 
             <Link
               href="/admin/branches"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-bold transition-colors ${
+              className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activePage === "branches"
-                  ? "bg-[#132A4F] text-white border border-blue-500/40 font-black"
-                  : "bg-slate-900/80 text-slate-200 hover:bg-slate-800 border border-slate-800"
+                  ? "bg-[#0B1B33] text-white font-bold shadow-sm"
+                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              <MapPin className="w-4 h-4" />
-              <span>Branches</span>
+              <div className="flex items-center space-x-3">
+                <MapPin className={`w-4 h-4 ${activePage === "branches" ? "text-white" : "text-slate-500"}`} />
+                <span>Branches</span>
+              </div>
+              <ChevronRight className={`w-4 h-4 ${activePage === "branches" ? "text-white/70" : "text-slate-400"}`} />
             </Link>
 
             <Link
               href="/admin/users"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-bold transition-colors ${
+              className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activePage === "users"
-                  ? "bg-[#132A4F] text-white border border-blue-500/40 font-black"
-                  : "bg-slate-900/80 text-slate-200 hover:bg-slate-800 border border-slate-800"
+                  ? "bg-[#0B1B33] text-white font-bold shadow-sm"
+                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              <UsersIcon className="w-4 h-4" />
-              <span>Staff Accounts</span>
+              <div className="flex items-center space-x-3">
+                <UsersIcon className={`w-4 h-4 ${activePage === "users" ? "text-white" : "text-slate-500"}`} />
+                <span>Staff Accounts</span>
+              </div>
+              <ChevronRight className={`w-4 h-4 ${activePage === "users" ? "text-white/70" : "text-slate-400"}`} />
+            </Link>
+
+            <div className="my-1 border-t border-slate-100" />
+
+            <Link
+              href="/admin/profile"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                activePage === "profile"
+                  ? "bg-[#0B1B33] text-white font-bold shadow-sm"
+                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <User className={`w-4 h-4 ${activePage === "profile" ? "text-white" : "text-slate-500"}`} />
+                <span>My Profile</span>
+              </div>
+              <ChevronRight className={`w-4 h-4 ${activePage === "profile" ? "text-white/70" : "text-slate-400"}`} />
+            </Link>
+
+            <Link
+              href="/admin/settings"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                activePage === "settings"
+                  ? "bg-[#0B1B33] text-white font-bold shadow-sm"
+                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Settings className={`w-4 h-4 ${activePage === "settings" ? "text-white" : "text-slate-500"}`} />
+                <span>Settings</span>
+              </div>
+              <ChevronRight className={`w-4 h-4 ${activePage === "settings" ? "text-white/70" : "text-slate-400"}`} />
             </Link>
           </nav>
 
-          <div className="pt-2 border-t border-slate-800/80 space-y-2">
+          <div className="pt-2 border-t border-slate-100">
             <Button
               onClick={() => {
                 setMobileMenuOpen(false);
                 handleLogout();
               }}
-              className="w-full font-bold text-xs text-white bg-[#132A4F] hover:bg-[#1C3B6E] justify-center py-3 mt-2"
+              className="w-full font-bold text-sm text-white bg-[#0B1B33] hover:bg-[#132A4F] justify-center py-3 rounded-xl shadow-sm transition-colors"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out

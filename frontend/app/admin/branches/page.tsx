@@ -537,7 +537,7 @@ export default function AdminBranchesPage() {
                   <input
                     type="text"
                     required
-                    placeholder="+250 788 123 456"
+                    placeholder="+250 788 381 721"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-medium focus:ring-2 focus:ring-baho-navy"

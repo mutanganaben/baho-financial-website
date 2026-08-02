@@ -14,9 +14,9 @@ export const Footer: React.FC = () => {
         {/* Column 1 & 2: Brand Identity & Regulatory License */}
         <div className="lg:col-span-2 space-y-5">
           <div className="flex items-center space-x-3">
-            <div className="relative w-48 h-14 bg-white/90 p-2 rounded-lg">
+            <div className="relative w-48 h-14 bg-white/95 p-2 rounded-xl border border-slate-700 shadow-sm">
               <Image
-                src="/baho-logo-horizontal.svg"
+                src="/images/BAHO FINANCIAL LTD.png"
                 alt="BAHO Financial Ltd."
                 fill
                 className="object-contain p-1"
@@ -90,11 +90,7 @@ export const Footer: React.FC = () => {
             </div>
             <div className="flex items-center space-x-3">
               <Phone className="w-4 h-4 text-baho-gold flex-shrink-0" />
-              <span>+250 788 123 456</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <Mail className="w-4 h-4 text-baho-gold flex-shrink-0" />
-              <span>kabuga.hq@bahofinancial.rw</span>
+              <span>+250 788 381 721</span>
             </div>
           </div>
         </div>

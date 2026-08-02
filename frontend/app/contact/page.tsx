@@ -375,28 +375,10 @@ export default function ContactPage() {
                         Main Phone
                       </h3>
                       <a
-                        href="tel:+250788123456"
+                        href="tel:+250788381721"
                         className="text-sm font-bold text-blue-600 hover:underline block"
                       >
-                        +250 788 123 456
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Email */}
-                  <div className="flex items-start space-x-4 p-5 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6" />
-                    </div>
-                    <div className="space-y-1 pt-0.5">
-                      <h3 className="text-base font-extrabold text-baho-navy-dark">
-                        Email
-                      </h3>
-                      <a
-                        href="mailto:info@bahofinancial.rw"
-                        className="text-sm font-bold text-blue-600 hover:underline block"
-                      >
-                        info@bahofinancial.rw
+                        +250 788 381 721
                       </a>
                     </div>
                   </div>

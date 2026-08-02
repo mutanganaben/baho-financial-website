@@ -29,7 +29,7 @@ function ApplyFormContent() {
     emailAddress: "",
     provinceDistrict: "",
     productCategory: initialProduct,
-    loanAmount: "1000000",
+    loanAmount: "",
     repaymentTerm: "6",
     preferredBranch: "kigali-kabuga",
     loanPurpose: "",

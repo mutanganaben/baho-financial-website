@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   keywords: ["BAHO Financial", "NDFI", "Financial Services", "SME Loans", "Asset Financing", "Rwanda Finance"],
   authors: [{ name: "BAHO Financial Team" }],
   icons: {
-    icon: "/baho-logo.svg",
+    icon: "/images/BAHO FINANCIAL LTD.png",
   },
 };
 

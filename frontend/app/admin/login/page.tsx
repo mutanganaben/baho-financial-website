@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { fetchApi } from "@/lib/api";
 import { setAdminSession } from "@/lib/auth";
 import {
@@ -13,7 +14,6 @@ import {
   EyeOff,
   AlertCircle,
   ArrowRight,
-  Building2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -60,8 +60,14 @@ export default function AdminLoginPage() {
       {/* Top Header Navigation */}
       <header className="bg-[#0B1B33] text-white p-6 sm:p-7 flex items-center justify-between border-b border-slate-800 shadow-md">
         <Link href="/" className="flex items-center space-x-3 group">
-          <div className="w-10 h-10 rounded-xl bg-baho-gold/10 border border-baho-gold/30 flex items-center justify-center text-baho-gold group-hover:scale-105 transition-transform">
-            <Building2 className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 transition-transform flex-shrink-0 relative overflow-hidden">
+            <Image
+              src="/images/BAHO FINANCIAL LTD.png"
+              alt="BAHO Financial Ltd. Logo"
+              width={32}
+              height={32}
+              className="object-contain"
+            />
           </div>
           <div>
             <span className="text-lg font-black tracking-wider text-white block leading-none">

@@ -29,7 +29,7 @@ const HERO_SLIDES: HeroSlide[] = [
     primaryCtaLink: "/apply",
     secondaryCtaText: "Our Products",
     secondaryCtaLink: "/financing",
-    backgroundImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600&auto=format&fit=crop",
+    backgroundImage: "/images/Baho1.jpeg",
   },
   {
     id: "slide-2",
@@ -40,7 +40,7 @@ const HERO_SLIDES: HeroSlide[] = [
     primaryCtaLink: "/apply",
     secondaryCtaText: "Our Products",
     secondaryCtaLink: "/financing",
-    backgroundImage: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1600&auto=format&fit=crop",
+    backgroundImage: "/images/Baho2.jpeg",
   },
   {
     id: "slide-3",
@@ -51,7 +51,7 @@ const HERO_SLIDES: HeroSlide[] = [
     primaryCtaLink: "/apply",
     secondaryCtaText: "Our Products",
     secondaryCtaLink: "/financing",
-    backgroundImage: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1600&auto=format&fit=crop",
+    backgroundImage: "/images/Baho3.jpeg",
   },
   {
     id: "slide-4",
@@ -62,7 +62,7 @@ const HERO_SLIDES: HeroSlide[] = [
     primaryCtaLink: "/apply",
     secondaryCtaText: "Our Products",
     secondaryCtaLink: "/financing",
-    backgroundImage: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1600&auto=format&fit=crop",
+    backgroundImage: "/images/Baho4.jpeg",
   },
 ];
 

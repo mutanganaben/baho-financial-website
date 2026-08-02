@@ -234,17 +234,19 @@ export default function BranchesPage() {
                               </a>
                             </div>
 
-                            {/* Email */}
-                            <div className="flex items-center space-x-3 text-slate-600">
-                              <Mail className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                              <a
-                                href={`mailto:${branch.email || "info@bahofinancial.rw"}`}
-                                className="font-medium text-blue-600 hover:underline truncate"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                {branch.email || "info@bahofinancial.rw"}
-                              </a>
-                            </div>
+                            {/* Email (only rendered if official email exists) */}
+                            {branch.email && (
+                              <div className="flex items-center space-x-3 text-slate-600">
+                                <Mail className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                                <a
+                                  href={`mailto:${branch.email}`}
+                                  className="font-medium text-blue-600 hover:underline truncate"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {branch.email}
+                                </a>
+                              </div>
+                            )}
 
                             {/* Operating Hours */}
                             <div className="flex items-center space-x-3 text-slate-500">
