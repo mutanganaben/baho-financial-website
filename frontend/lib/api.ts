@@ -1,6 +1,6 @@
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
-  'https://baho-backend-fmr7.onrender.com/api/v1';
+  '/api/v1';
 
 export interface ApiProduct {
   id: string;
