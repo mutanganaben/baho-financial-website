@@ -1,6 +1,18 @@
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  '/api/v1';
+const DEFAULT_LOCAL_URL = 'http://localhost:4000/api/v1';
+const DEFAULT_PROD_URL = 'https://baho-backend-fmr7.onrender.com/api/v1';
+
+export function getApiBaseUrl(): string {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  if (
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ) {
+    return DEFAULT_LOCAL_URL;
+  }
+  return DEFAULT_PROD_URL;
+}
 
 export interface ApiProduct {
   id: string;
@@ -39,30 +51,62 @@ export interface ApiBranch {
 export async function fetchApi<T>(
   endpoint: string,
   options: RequestInit = {},
+  retries = 1,
 ): Promise<T> {
-  const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  const primaryBaseUrl = getApiBaseUrl();
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
 
   const defaultHeaders: Record<string, string> = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   };
 
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      ...defaultHeaders,
-      ...(options.headers as Record<string, string>),
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    const errorMessage = Array.isArray(data?.message)
-      ? data.message.join(', ')
-      : data?.message || 'An error occurred while communicating with the server.';
-    throw new Error(errorMessage);
+  // Build candidate base URLs: try primary first, then secondary fallback if connection fails
+  const candidateBaseUrls: string[] = [primaryBaseUrl];
+  if (primaryBaseUrl.includes('localhost') || primaryBaseUrl.includes('127.0.0.1')) {
+    candidateBaseUrls.push(DEFAULT_PROD_URL);
   }
 
-  return data as T;
+  let lastError: Error = new Error('Failed to connect to server.');
+
+  for (const baseUrl of candidateBaseUrls) {
+    const url = `${baseUrl}${cleanEndpoint}`;
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout allowance for cold starts
+
+        const response = await fetch(url, {
+          ...options,
+          signal: options.signal || controller.signal,
+          headers: {
+            ...defaultHeaders,
+            ...(options.headers as Record<string, string>),
+          },
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          const errorMessage = Array.isArray(data?.message)
+            ? data.message.join(', ')
+            : data?.message || 'An error occurred while communicating with the server.';
+          throw new Error(errorMessage);
+        }
+
+        return data as T;
+      } catch (err: any) {
+        lastError = err;
+        // If there are retries remaining, wait 1s before retrying
+        if (attempt < retries) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      }
+    }
+  }
+
+  throw lastError;
 }
