@@ -3,43 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-}
-
-enum ProductCategory {
-  CASH_ADVANCE
-  PERSONAL_LOAN
-  STARTUP_BUSINESS_LOAN
-  BUSINESS_GROWTH_LOAN
-}
-
-enum Province {
-  KIGALI
-  EAST
-  WEST
-  NORTH
-  SOUTH
-}
-
-enum MessageStatus {
-  UNREAD
-  READ
-  REPLIED
-}
-
-enum ApplicationStatus {
-  PENDING
-  UNDER_REVIEW
-  APPROVED
-  REJECTED
-  CANCELLED
-}
-
-enum AdminRole {
-  SUPER_ADMIN
-  CREDIT_OFFICER
 }
 
 model Product {
@@ -124,4 +90,38 @@ model AdminUser {
   updatedAt DateTime  @updatedAt
 
   @@map("admin_users")
+}
+
+enum ProductCategory {
+  CASH_ADVANCE
+  PERSONAL_LOAN
+  STARTUP_BUSINESS_LOAN
+  BUSINESS_GROWTH_LOAN
+}
+
+enum Province {
+  KIGALI
+  EAST
+  WEST
+  NORTH
+  SOUTH
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+}
+
+enum ApplicationStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  CREDIT_OFFICER
 }
