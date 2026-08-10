@@ -14,6 +14,7 @@ import {
   ArrowRight,
   LucideIcon,
   AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 
 const PRODUCT_THEMES: Record<
@@ -30,18 +31,28 @@ const PRODUCT_THEMES: Record<
   }
 > = {
   "cash-advance": {
-    badge: "Same-day approval",
+    badge: "Fast 24h Approval",
     icon: Zap,
     theme: {
-      iconBg: "bg-rose-50",
-      iconColor: "text-rose-600",
-      checkColor: "text-rose-600 bg-rose-50",
-      buttonBg: "bg-rose-600 hover:bg-rose-700 text-white",
+      iconBg: "bg-amber-50",
+      iconColor: "text-amber-600",
+      checkColor: "text-amber-600 bg-amber-50",
+      buttonBg: "bg-amber-600 hover:bg-amber-700 text-white",
     },
   },
   "personal-loan": {
-    badge: "Decision within 24 hours",
+    badge: "Flexible Terms",
     icon: UserCheck,
+    theme: {
+      iconBg: "bg-blue-50",
+      iconColor: "text-blue-600",
+      checkColor: "text-blue-600 bg-blue-50",
+      buttonBg: "bg-blue-600 hover:bg-blue-700 text-white",
+    },
+  },
+  "startup-business-loan": {
+    badge: "Entrepreneur Support",
+    icon: Sprout,
     theme: {
       iconBg: "bg-emerald-50",
       iconColor: "text-emerald-600",
@@ -49,24 +60,14 @@ const PRODUCT_THEMES: Record<
       buttonBg: "bg-emerald-600 hover:bg-emerald-700 text-white",
     },
   },
-  "startup-business-loan": {
-    badge: "Approved in 48 hours",
-    icon: Sprout,
-    theme: {
-      iconBg: "bg-amber-50",
-      iconColor: "text-amber-600",
-      checkColor: "text-amber-600 bg-amber-50",
-      buttonBg: "bg-amber-500 hover:bg-amber-600 text-white",
-    },
-  },
   "business-growth-loan": {
-    badge: "Processing in 3–5 days",
+    badge: "Scale Your Business",
     icon: Briefcase,
     theme: {
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
-      checkColor: "text-blue-600 bg-blue-50",
-      buttonBg: "bg-blue-600 hover:bg-blue-700 text-white",
+      iconBg: "bg-indigo-50",
+      iconColor: "text-indigo-600",
+      checkColor: "text-indigo-600 bg-indigo-50",
+      buttonBg: "bg-indigo-600 hover:bg-indigo-700 text-white",
     },
   },
 };
@@ -76,33 +77,39 @@ export const FinancingProducts: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const loadProducts = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    try {
+      const data = await fetchApi<ApiProduct[]>("/products");
+      setProducts(data || []);
+    } catch (err: any) {
+      console.error("Failed to load home products:", err);
+      setErrorMessage("Failed to load products from server.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchApi<ApiProduct[]>("/products")
-      .then((data) => setProducts(data))
-      .catch((err) => {
-        console.error("Failed to load home products:", err);
-        setErrorMessage("Failed to load products from server.");
-      })
-      .finally(() => setIsLoading(false));
+    loadProducts();
   }, []);
 
   return (
-    <section className="py-20 lg:py-28 bg-slate-50 border-t border-b border-slate-200/70">
+    <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-t border-b border-slate-200/70">
       <Container>
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-          <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-            <span className="w-8 h-0.5 bg-baho-gold inline-block" />
-            <span>OUR FINANCING PRODUCTS</span>
-            <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+        <div className="text-left max-w-3xl space-y-3 mb-8">
+          <div className="text-baho-navy font-bold text-xs sm:text-sm tracking-widest uppercase">
+            LOAN PRODUCTS
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
-            Loans Designed for Your Needs
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+            Our loan products
           </h2>
 
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-            Choose from our simple loan options created to help you with personal expenses, farming, or growing your business across Rwanda.
+            We make the whole lending process super easy and fast.
           </p>
         </div>
 
@@ -122,9 +129,19 @@ export const FinancingProducts: React.FC = () => {
             ))}
           </div>
         ) : errorMessage ? (
-          <div className="text-center p-6 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800 text-sm max-w-md mx-auto flex items-center justify-center space-x-2">
-            <AlertCircle className="w-4 h-4 text-rose-600" />
-            <span>{errorMessage}</span>
+          <div className="text-center p-6 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800 text-sm max-w-md mx-auto flex flex-col items-center justify-center space-y-3">
+            <div className="flex items-center space-x-2">
+              <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+              <span>{errorMessage}</span>
+            </div>
+            <button
+              type="button"
+              onClick={loadProducts}
+              className="px-4 py-1.5 text-xs font-bold bg-white border border-rose-200 hover:bg-rose-100 rounded-lg transition-colors text-rose-700 inline-flex items-center space-x-1.5 shadow-sm"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Retry Loading</span>
+            </button>
           </div>
         ) : (
           /* 4 Products Responsive Cards Grid */
@@ -150,9 +167,10 @@ export const FinancingProducts: React.FC = () => {
               ];
 
               return (
-                <div
+                <Link
                   key={product.id}
-                  className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                  href={`/financing#${product.slug}`}
+                  className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group block"
                 >
                   <div className="space-y-5">
                     {/* Category Icon Badge & Processing Time Tag */}
@@ -168,7 +186,7 @@ export const FinancingProducts: React.FC = () => {
                     </div>
 
                     {/* Product Title */}
-                    <h3 className="text-2xl font-bold text-baho-navy-dark tracking-tight">
+                    <h3 className="text-2xl font-bold text-baho-navy-dark tracking-tight group-hover:text-baho-navy transition-colors">
                       {product.name}
                     </h3>
 
@@ -202,34 +220,18 @@ export const FinancingProducts: React.FC = () => {
                       ))}
                     </div>
                   </div>
-
-                  {/* Apply Action Button */}
-                  <div className="pt-8">
-                    <Link
-                      href={`/apply?product=${product.slug}`}
-                      className="block"
-                    >
-                      <Button
-                        className={`w-full justify-center font-bold py-3.5 rounded-xl transition-all shadow-sm ${meta.theme.buttonBg}`}
-                      >
-                        Apply Now
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
+                </Link>
               );
             })}
           </div>
         )}
 
-        {/* Bottom All Products Link */}
-        <div className="text-center pt-12">
-          <Link
-            href="/financing"
-            className="inline-flex items-center space-x-2 text-baho-navy hover:text-baho-gold font-bold text-base transition-colors group"
-          >
-            <span>Explore Full Product Details</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        {/* View All Loans Action Button */}
+        <div className="pt-10 text-left">
+          <Link href="/financing">
+            <Button className="bg-baho-navy hover:bg-[#16355E] text-white font-bold py-3.5 px-7 rounded-xl shadow-sm text-base">
+              View all Loans
+            </Button>
           </Link>
         </div>
       </Container>

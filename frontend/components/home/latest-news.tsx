@@ -59,17 +59,17 @@ const ARTICLES: NewsArticle[] = [
 
 export const LatestNews: React.FC = () => {
   return (
-    <section className="py-20 lg:py-28 bg-slate-50 border-t border-b border-slate-200/80">
+    <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-t border-b border-slate-200/80">
       <Container>
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-6">
           <div className="space-y-3">
             <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
               <span className="w-8 h-0.5 bg-baho-gold inline-block" />
               <span>LATEST NEWS</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
               Stay Informed
             </h2>
           </div>

@@ -4,85 +4,86 @@ import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-
-interface KeyMetric {
-  value: string;
-  label: string;
-}
-
-const ABOUT_METRICS: KeyMetric[] = [
-  { value: "RWF 80M+", label: "Capital Disbursed" },
-  { value: "100+", label: "Active Clients" },
-  { value: "90%", label: "Repayment Rate" },
-  { value: "4 Branches", label: "Across Rwanda" },
-];
 
 export const AboutSection: React.FC = () => {
   return (
-    <section className="py-20 lg:py-28 bg-white text-slate-900 overflow-hidden">
+    <section className="py-10 sm:py-12 lg:py-14 bg-[#f2f6fa] border-b border-slate-200/60">
       <Container>
-        <div className="max-w-4xl mx-auto space-y-10">
-          {/* Section Tagline & Display Heading */}
-          <div className="space-y-4 text-center">
-            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-baho-gold inline-block" />
-              <span>ABOUT BAHO</span>
-              <span className="w-8 h-0.5 bg-baho-gold inline-block" />
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-baho-navy-dark tracking-tight leading-[1.15]">
-              Building Financial Futures Since 2025
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column: Text & CTAs */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Main Title */}
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+              About Baho Financial Ltd.
             </h2>
 
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-3xl mx-auto">
-              BAHO Financial Ltd. is a licensed microfinance institution dedicated to providing accessible, transparent, and impactful financial services to individuals, entrepreneurs, and businesses across Rwanda.
-            </p>
-          </div>
-
-          {/* Detailed Overview Card */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-3xl p-8 sm:p-10 space-y-6">
-            <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
-              Launched in 2025 with a commitment to community impact, we operate 4 branches serving clients across Rwanda — helping them start businesses, build homes, and fund their most important goals.
+            {/* Description Paragraph */}
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+              BAHO Financial Ltd. is a micro-lending institution providing loans to individuals and Businesses across Rwanda where Loans are made simple, dreams are made real.
             </p>
 
-            {/* Core Values Bullet Points */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-200/70">
-              {[
-                "Licensed & Regulated NDFI (BNR)",
-                "24-Hour Fast Loan Processing",
-                "Transparent, Zero Hidden Fees",
-                "Dedicated Financial Advisory",
-              ].map((bullet, idx) => (
-                <div key={idx} className="flex items-center space-x-3 text-sm font-bold text-baho-navy-dark">
-                  <CheckCircle2 className="w-5 h-5 text-baho-gold flex-shrink-0" />
-                  <span>{bullet}</span>
-                </div>
-              ))}
+            {/* Mission / Motto Italicized */}
+            <p className="text-sm sm:text-base text-slate-500 italic leading-relaxed pt-1">
+              Our mission is to empower your financial journey with flexible credit options, fast approvals and transparent terms.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-4">
+              <Link href="/about">
+                <Button className="bg-baho-navy hover:bg-baho-navy-dark text-white font-bold py-3.5 px-6 rounded-xl shadow-sm transition-all text-sm sm:text-base">
+                  Learn more
+                </Button>
+              </Link>
+              <Link href="/apply">
+                <Button variant="gold" className="font-bold py-3.5 px-6 rounded-xl shadow-sm transition-all text-sm sm:text-base">
+                  Apply Now
+                </Button>
+              </Link>
             </div>
           </div>
 
-          {/* Metrics Badges Row */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {ABOUT_METRICS.map((metric, idx) => (
-              <div key={idx} className="bg-white border border-slate-200/80 p-5 rounded-2xl text-center space-y-1 shadow-sm">
-                <div className="text-xl sm:text-2xl font-black text-baho-navy">
-                  {metric.value}
+          {/* Right Column: Stat Cards Grid & Banner */}
+          <div className="lg:col-span-5 space-y-5">
+            {/* Top Row: 2 Cards */}
+            <div className="grid grid-cols-2 gap-5">
+              <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-sm text-center space-y-1.5 hover:shadow-md transition-all">
+                <div className="text-3xl sm:text-4xl font-extrabold text-baho-navy tracking-tight">
+                  4
                 </div>
                 <div className="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
-                  {metric.label}
+                  ACTIVE BRANCHES
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* CTA Button */}
-          <div className="text-center pt-2">
-            <Link href="/about">
-              <Button variant="primary" size="lg" className="font-bold shadow-md">
-                Learn More About Us
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
+              <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-sm text-center space-y-1.5 hover:shadow-md transition-all">
+                <div className="text-3xl sm:text-4xl font-extrabold text-baho-navy tracking-tight">
+                  &lt; 24h
+                </div>
+                <div className="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  LOAN APPROVAL
+                </div>
+              </div>
+            </div>
+
+            {/* Middle Row: 1 Half-Width Card */}
+            <div className="grid grid-cols-2 gap-5">
+              <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-sm text-center space-y-1.5 hover:shadow-md transition-all">
+                <div className="text-3xl sm:text-4xl font-extrabold text-baho-navy tracking-tight">
+                  10%
+                </div>
+                <div className="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  MONTHLY INTEREST
+                </div>
+              </div>
+              <div className="hidden sm:block" />
+            </div>
+
+            {/* Bottom Row: Full-Width Branch Banner */}
+            <Link
+              href="/branches"
+              className="block bg-baho-navy hover:bg-baho-navy-dark text-white font-bold py-4 px-6 rounded-2xl text-center shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] text-base sm:text-lg"
+            >
+              4 branches across Rwanda
             </Link>
           </div>
         </div>

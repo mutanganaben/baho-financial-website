@@ -74,18 +74,18 @@ const FEATURES: FeatureItem[] = [
 
 export const WhyChooseUs: React.FC = () => {
   return (
-    <section className="py-20 lg:py-28 bg-white text-slate-900 overflow-hidden">
+    <section className="py-10 sm:py-12 lg:py-14 bg-white text-slate-900 overflow-hidden">
       <Container>
         {/* Section Title & Subtitle Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-8 sm:mb-10">
           <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
             <span className="w-8 h-0.5 bg-baho-gold inline-block" />
             <span>WHY CHOOSE BAHO</span>
             <span className="w-8 h-0.5 bg-baho-gold inline-block" />
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
-            Built on Trust. Driven by Results.
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+            Finance Made Simple.
           </h2>
 
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">

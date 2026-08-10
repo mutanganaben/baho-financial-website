@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface HeroSlide {
   id: string;
@@ -78,20 +77,10 @@ export const HeroSlider: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const handlePrev = () => {
-    setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? HERO_SLIDES.length - 1 : prevIndex - 1
-    );
-  };
-
-  const handleNext = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % HERO_SLIDES.length);
-  };
-
   const activeSlide = HERO_SLIDES[activeIndex];
 
   return (
-    <section className="relative w-full h-[520px] sm:h-[580px] lg:h-[620px] overflow-hidden bg-baho-navy-dark text-white flex items-center">
+    <section className="relative w-full h-[440px] sm:h-[480px] lg:h-[510px] overflow-hidden bg-baho-navy-dark text-white flex items-start pt-14 sm:pt-16 lg:pt-20">
       {/* Background Stacked Images with Ken Burns (Zoom) and Smooth 1.5s Crossfade */}
       <div className="absolute inset-0 z-0">
         {HERO_SLIDES.map((slide, idx) => {
@@ -126,8 +115,8 @@ export const HeroSlider: React.FC = () => {
       </div>
 
       {/* Fixed Text Content Layer with Subtle Smooth Crossfade */}
-      <Container className="relative z-30 py-12">
-        <div className="max-w-3xl space-y-4 sm:space-y-5">
+      <Container className="relative z-30">
+        <div className="max-w-3xl space-y-3 sm:space-y-4">
           {/* Tagline Badge */}
           <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase transition-opacity duration-700">
             <span className="w-8 h-0.5 bg-baho-gold inline-block" />
@@ -135,7 +124,7 @@ export const HeroSlider: React.FC = () => {
           </div>
 
           {/* Dynamic Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] text-white transition-all duration-700">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] text-white transition-all duration-700">
             {activeSlide.title}
           </h1>
 
@@ -145,7 +134,7 @@ export const HeroSlider: React.FC = () => {
           </p>
 
           {/* Fixed Action CTA Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-2 sm:pt-4">
+          <div className="flex flex-wrap items-center gap-4 pt-2 sm:pt-3">
             <Link href={activeSlide.primaryCtaLink}>
               <Button
                 variant="gold"
@@ -168,28 +157,8 @@ export const HeroSlider: React.FC = () => {
         </div>
       </Container>
 
-      {/* Manual Arrow Controls */}
-      <div className="absolute bottom-8 right-8 z-40 hidden md:flex items-center space-x-3">
-        <button
-          type="button"
-          onClick={handlePrev}
-          className="p-3 rounded-full bg-white/10 hover:bg-white/25 text-white backdrop-blur-md transition-colors border border-white/20 focus:outline-none"
-          aria-label="Previous Slide"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
-          type="button"
-          onClick={handleNext}
-          className="p-3 rounded-full bg-white/10 hover:bg-white/25 text-white backdrop-blur-md transition-colors border border-white/20 focus:outline-none"
-          aria-label="Next Slide"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
-
       {/* Slide Indicators / Pagination Dots */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex items-center space-x-2.5">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center space-x-2.5">
         {HERO_SLIDES.map((_, idx) => (
           <button
             key={idx}
