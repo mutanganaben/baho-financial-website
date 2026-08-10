@@ -120,7 +120,7 @@ export default function ContactPage() {
               <span>BAHO FINANCIAL</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
               Contact Us
             </h1>
 
@@ -131,7 +131,7 @@ export default function ContactPage() {
         </section>
 
         {/* Section 2: Contact Form & HQ Info Grid */}
-        <section className="py-20 lg:py-24 bg-white border-b border-slate-200/70">
+        <section className="py-10 sm:py-12 lg:py-14 bg-white border-b border-slate-200/70">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
               

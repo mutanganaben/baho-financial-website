@@ -103,7 +103,7 @@ export default function BranchesPage() {
               <span>BAHO FINANCIAL</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
               Our Branches
             </h1>
 
@@ -114,7 +114,7 @@ export default function BranchesPage() {
         </section>
 
         {/* Section 2: Branch Directory Cards Grid */}
-        <section className="py-16 lg:py-24 bg-slate-50 border-b border-slate-200/70">
+        <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-b border-slate-200/70">
           <Container className="space-y-12">
             <div className="text-center max-w-3xl mx-auto space-y-3">
               <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
@@ -123,7 +123,7 @@ export default function BranchesPage() {
                 <span className="w-8 h-0.5 bg-baho-gold inline-block" />
               </div>
 
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-baho-navy-dark tracking-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
                 Find Your Nearest BAHO Branch
               </h2>
             </div>
@@ -208,7 +208,7 @@ export default function BranchesPage() {
                           </div>
 
                           {/* Branch Name */}
-                          <h3 className="text-xl font-bold text-baho-navy-dark leading-snug">
+                          <h3 className="text-xl font-bold text-baho-navy-dark tracking-tight leading-snug">
                             {branch.name}
                           </h3>
 
@@ -216,18 +216,18 @@ export default function BranchesPage() {
                           <div className="space-y-3 pt-2 text-sm">
                             {/* Address */}
                             <div className="flex items-start space-x-3 text-slate-600">
-                              <MapPin className="w-4 h-4 text-rose-500 flex-shrink-0 mt-0.5" />
-                              <span className="font-medium leading-tight">
+                              <MapPin className="w-4 h-4 text-baho-gold flex-shrink-0 mt-0.5" />
+                              <span className="font-medium text-slate-700 leading-snug">
                                 {branch.address} ({branch.district})
                               </span>
                             </div>
 
                             {/* Phone */}
                             <div className="flex items-center space-x-3 text-slate-600">
-                              <Phone className="w-4 h-4 text-rose-500 flex-shrink-0" />
+                              <Phone className="w-4 h-4 text-baho-gold flex-shrink-0" />
                               <a
                                 href={`tel:${branch.phone.replace(/\s+/g, "")}`}
-                                className="font-semibold text-blue-600 hover:underline"
+                                className="font-semibold text-baho-navy hover:text-baho-gold hover:underline transition-colors"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 {branch.phone}
@@ -237,10 +237,10 @@ export default function BranchesPage() {
                             {/* Email (only rendered if official email exists) */}
                             {branch.email && (
                               <div className="flex items-center space-x-3 text-slate-600">
-                                <Mail className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                                <Mail className="w-4 h-4 text-baho-gold flex-shrink-0" />
                                 <a
                                   href={`mailto:${branch.email}`}
-                                  className="font-medium text-blue-600 hover:underline truncate"
+                                  className="font-medium text-baho-navy hover:text-baho-gold hover:underline truncate transition-colors"
                                   onClick={(e) => e.stopPropagation()}
                                 >
                                   {branch.email}
@@ -251,7 +251,7 @@ export default function BranchesPage() {
                             {/* Operating Hours */}
                             <div className="flex items-center space-x-3 text-slate-500">
                               <Clock className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                              <span className="font-medium text-xs">
+                              <span className="font-medium text-xs text-slate-600">
                                 {branch.openingHours}
                               </span>
                             </div>
@@ -283,31 +283,31 @@ export default function BranchesPage() {
 
         {/* Section 3: Detailed Location & Directions Section */}
         {selectedBranch && !isLoading && (
-          <section className="py-20 lg:py-24 bg-white border-b border-slate-200/70">
+          <section className="py-10 sm:py-12 lg:py-14 bg-white border-b border-slate-200/70">
             <Container>
-              <div className="bg-[#0B1B33] text-white rounded-3xl p-8 lg:p-12 shadow-2xl border border-slate-800 space-y-8">
+              <div className="bg-[#0B1B33] text-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-slate-800 space-y-6">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   {/* Left Detail Panel */}
-                  <div className="lg:col-span-6 space-y-6">
-                    <div className="inline-flex items-center space-x-2 text-baho-gold font-bold text-xs uppercase tracking-wider">
+                  <div className="lg:col-span-6 space-y-5">
+                    <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
                       <span className="w-6 h-0.5 bg-baho-gold inline-block" />
                       <span>ACTIVE LOCATION DETAILS</span>
                     </div>
 
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
                       {selectedBranch.name}
                     </h2>
 
-                    <p className="text-slate-300 text-base leading-relaxed">
+                    <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed max-w-xl">
                       Visit our dedicated loan officers at {selectedBranch.name} for instant credit consultation, document submission, and fast financing support.
                     </p>
 
-                    <div className="space-y-4 pt-2">
+                    <div className="space-y-3.5 pt-1">
                       <div className="flex items-start space-x-3 text-sm text-slate-200">
                         <MapPin className="w-5 h-5 text-baho-gold flex-shrink-0 mt-0.5" />
                         <div>
-                          <div className="font-bold text-white">Location Address</div>
-                          <div>{selectedBranch.address}</div>
+                          <div className="font-semibold text-white text-sm">Location Address</div>
+                          <div className="font-normal text-slate-300 text-xs sm:text-sm">{selectedBranch.address}</div>
                           <div className="text-xs text-slate-400">
                             {selectedBranch.district}, {formatProvince(selectedBranch.province)}
                           </div>
@@ -317,10 +317,10 @@ export default function BranchesPage() {
                       <div className="flex items-center space-x-3 text-sm text-slate-200">
                         <Phone className="w-5 h-5 text-baho-gold flex-shrink-0" />
                         <div>
-                          <div className="font-bold text-white">Direct Line</div>
+                          <div className="font-semibold text-white text-sm">Direct Line</div>
                           <a
                             href={`tel:${selectedBranch.phone.replace(/\s+/g, "")}`}
-                            className="hover:text-baho-gold transition-colors"
+                            className="font-normal text-slate-300 text-xs sm:text-sm hover:text-baho-gold transition-colors"
                           >
                             {selectedBranch.phone}
                           </a>
@@ -330,13 +330,13 @@ export default function BranchesPage() {
                       <div className="flex items-center space-x-3 text-sm text-slate-200">
                         <Clock className="w-5 h-5 text-baho-gold flex-shrink-0" />
                         <div>
-                          <div className="font-bold text-white">Branch Working Hours</div>
-                          <div>{selectedBranch.openingHours}</div>
+                          <div className="font-semibold text-white text-sm">Branch Working Hours</div>
+                          <div className="font-normal text-slate-300 text-xs sm:text-sm">{selectedBranch.openingHours}</div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="pt-4 flex flex-wrap gap-4">
+                    <div className="pt-3 flex flex-wrap gap-3">
                       <a
                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                           `${selectedBranch.address}, ${selectedBranch.district}, Rwanda`
@@ -344,7 +344,7 @@ export default function BranchesPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Button variant="gold" size="md" className="font-bold shadow-md">
+                        <Button variant="gold" size="md" className="font-bold shadow-md text-xs sm:text-sm">
                           Get Directions on Google Maps
                           <ExternalLink className="w-4 h-4 ml-2" />
                         </Button>
@@ -354,7 +354,7 @@ export default function BranchesPage() {
                         <Button
                           variant="outline"
                           size="md"
-                          className="font-bold border-white/20 text-white hover:bg-white/10"
+                          className="font-bold border-white/20 text-white hover:bg-white/10 text-xs sm:text-sm"
                         >
                           Book Appointment
                         </Button>
@@ -363,7 +363,7 @@ export default function BranchesPage() {
                   </div>
 
                   {/* Right Interactive Google Maps Embed Container */}
-                  <div className="lg:col-span-6 relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 border border-white/10 shadow-inner">
+                  <div className="lg:col-span-6 relative rounded-2xl overflow-hidden h-[260px] sm:h-[300px] lg:h-[320px] bg-slate-900 border border-white/10 shadow-inner">
                     <iframe
                       title={`Google Map for ${selectedBranch.name}`}
                       width="100%"

@@ -492,7 +492,7 @@ export default function ApplyPage() {
               <span>BAHO FINANCIAL / ONLINE PORTAL</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
               Apply for a Loan
             </h1>
 
@@ -503,7 +503,7 @@ export default function ApplyPage() {
         </section>
 
         {/* Section 2: Application Form Container */}
-        <section className="py-16 lg:py-24 bg-slate-50 border-b border-slate-200/70">
+        <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-b border-slate-200/70">
           <Container>
             <Suspense fallback={<div className="text-center py-12 text-slate-500 font-bold">Loading application portal...</div>}>
               <ApplyFormContent />
