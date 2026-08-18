@@ -15,7 +15,7 @@ import {
   Users,
   TrendingUp,
   Clock,
-  User,
+  UserRound,
 } from "lucide-react";
 const CORE_VALUES = [
   {
@@ -73,22 +73,16 @@ const MILESTONES = [
 
 const LEADERSHIP_TEAM = [
   {
-    name: "Joshua Intwari",
-    role: "Managing Director & CEO",
-    bio: "Over 15 years of senior executive experience in Rwandan banking, microfinance risk management, and SME growth strategy.",
-    image: "",
-  },
-  {
-    name: "Jacky",
     role: "Operations and Business Manager",
-    bio: "Expert in retail lending, credit underwriting, and branch operations, driving 90%+ portfolio quality across all regions.",
-    image: "",
+    department: "OPERATIONS AND BUSINESS MANAGER",
   },
   {
-    name: "Emmanuel",
-    role: "Finance & Administration Manager",
-    bio: "Specialist in regulatory compliance, NDFI financial governance, and financial consumer protection under BNR guidelines.",
-    image: "",
+    role: "Finance & Administration",
+    department: "FINANCE & ADMINISTRATION",
+  },
+  {
+    role: "Managing Director",
+    department: "MD",
   },
 ];
 
@@ -99,67 +93,79 @@ export default function AboutPage() {
 
       <main className="flex-1">
         {/* Section 1: Hero Banner */}
-        <section className="bg-[#0B1B33] text-white py-10 sm:py-12 lg:py-14 relative overflow-hidden border-b border-slate-800">
+        <section className="bg-[#0B1B33] text-white py-16 lg:py-20 relative overflow-hidden border-b border-slate-800">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
-          <Container className="relative z-10 space-y-3">
-            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-baho-gold inline-block" />
-              <span>BAHO FINANCIAL / ABOUT US</span>
+          <Container className="relative z-10 space-y-4">
+            <div className="text-slate-300 font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span>Who we are</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight max-w-4xl">
-              Empowering Rwandan Businesses & Communities
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight max-w-4xl">
+              About Baho Financial Ltd.
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-3xl font-normal leading-relaxed">
-              BAHO Financial Ltd. is a licensed Non-Deposit Financial Institution (NDFI) dedicated to offering accessible, transparent, and flexible credit solutions to drive sustainable growth.
+            <p className="text-sm sm:text-base text-slate-300 max-w-3xl font-normal leading-relaxed">
+              Our mission is to empower Rwandans with reliable capital from small daily cash needs to large business investments.
             </p>
           </Container>
         </section>
 
         {/* Section 2: Institutional Story & Overview */}
-        <section className="py-10 sm:py-12 lg:py-14 bg-white border-b border-slate-200/70">
-          <Container className="space-y-8">
-            {/* Story Content */}
-            <div className="space-y-6">
-              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
-                <span>OUR FOUNDATION</span>
+        <section className="py-16 lg:py-20 bg-white border-b border-slate-200/70">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              {/* Left Column: Story Content */}
+              <div className="lg:col-span-7 space-y-6">
+                <div className="text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                  <span>ABOUT BAHO FINANCIAL LTD.</span>
+                </div>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
+                  Our story
+                </h2>
+
+                <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                  BAHO Financial Ltd. is a micro-lending institution based in Rwanda, offering accessible and transparent loans to individuals, entrepreneurs, and businesses through our 4 branches.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <Link href="/apply">
+                    <Button variant="gold" size="md" className="font-bold px-6 py-2.5 shadow-md">
+                      Apply Now
+                    </Button>
+                  </Link>
+                  <Link href="/branches">
+                    <Button
+                      variant="outline"
+                      size="md"
+                      className="border-baho-navy text-baho-navy hover:bg-baho-navy hover:text-white font-bold px-6 py-2.5 transition-colors"
+                    >
+                      Find a branch
+                    </Button>
+                  </Link>
+                </div>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
-                Bridging the Financing Gap with Trust and Innovation
-              </h2>
+              {/* Right Column: Stat Cards Grid */}
+              <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-6 rounded-2xl bg-blue-50/60 border border-blue-100/80 space-y-1 text-center">
+                  <div className="text-2xl sm:text-3xl font-bold text-baho-navy">4</div>
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Active Branches</div>
+                </div>
 
-              <div className="space-y-4 text-slate-600 leading-relaxed font-normal text-sm sm:text-base max-w-4xl">
-                <p>
-                  Established in 2025, BAHO Financial Ltd. was founded on a clear conviction: micro, small, and medium enterprises (MSMEs) and working individuals in Rwanda deserve credit products designed for speed, flexibility, and fairness.
-                </p>
-                <p>
-                  Unlike traditional deposit-taking institutions with rigid bureaucratic procedures, we specialize exclusively in non-deposit financial products—allowing us to focus 100% of our operations on rapid credit assessment, personalized advisory, and efficient disbursement.
-                </p>
-                <p>
-                  From our headquarters in Kigali to our regional branches in Kamonyi and Nyagatare, we walk alongside our clients through every step of their growth journey.
-                </p>
-              </div>
+                <div className="p-6 rounded-2xl bg-blue-50/60 border border-blue-100/80 space-y-1 text-center">
+                  <div className="text-2xl sm:text-3xl font-bold text-baho-navy">&lt; 24h</div>
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Decision Speed</div>
+                </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-100">
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
-                  <div className="text-2xl font-black text-baho-navy">RWF 80M+</div>
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Capital Disbursed</div>
+                <div className="p-6 rounded-2xl bg-blue-50/60 border border-blue-100/80 space-y-1 text-center sm:col-span-2">
+                  <div className="text-2xl sm:text-3xl font-bold text-baho-navy">10%</div>
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Monthly Interest</div>
                 </div>
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
-                  <div className="text-2xl font-black text-baho-navy">90%</div>
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Repayment Rate</div>
-                </div>
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
-                  <div className="text-2xl font-black text-baho-navy">50+</div>
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Active Clients</div>
-                </div>
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
-                  <div className="text-2xl font-black text-baho-navy">Licensed NDFI</div>
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Regulated by BNR</div>
+
+                <div className="sm:col-span-2 bg-[#183B6B] text-white rounded-2xl p-6 text-center shadow-md flex items-center justify-center">
+                  <div className="text-base sm:text-lg font-bold text-white">4 branches across Rwanda</div>
                 </div>
               </div>
             </div>
@@ -167,15 +173,15 @@ export default function AboutPage() {
         </section>
 
         {/* Section 3: Vision & Mission Cards */}
-        <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-b border-slate-200/70">
+        <section className="py-16 lg:py-20 bg-[#f4f7fa] border-b border-slate-200/70">
           <Container className="space-y-12">
             <div className="space-y-3">
-              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+              <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
                 <span>PURPOSE & DIRECTION</span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
                 Our Vision & Mission
               </h2>
             </div>
@@ -184,7 +190,7 @@ export default function AboutPage() {
               {/* Vision Card */}
               <div className="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm space-y-5 hover:shadow-md transition-shadow relative overflow-hidden">
                 <div className="w-14 h-14 rounded-2xl bg-blue-50 text-baho-navy flex items-center justify-center">
-                  <Compass className="w-7 h-7" />
+                  <Compass className="w-7 h-7" strokeWidth={1.75} />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-baho-navy-dark tracking-tight">
                   Our Vision
@@ -197,7 +203,7 @@ export default function AboutPage() {
               {/* Mission Card */}
               <div className="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm space-y-5 hover:shadow-md transition-shadow relative overflow-hidden">
                 <div className="w-14 h-14 rounded-2xl bg-amber-50 text-baho-gold flex items-center justify-center">
-                  <Target className="w-7 h-7" />
+                  <Target className="w-7 h-7" strokeWidth={1.75} />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-baho-navy-dark tracking-tight">
                   Our Mission
@@ -211,15 +217,15 @@ export default function AboutPage() {
         </section>
 
         {/* Section 4: Core Values Grid */}
-        <section className="py-10 sm:py-12 lg:py-14 bg-white border-b border-slate-200/70">
+        <section className="py-16 lg:py-20 bg-white border-b border-slate-200/70">
           <Container className="space-y-12">
             <div className="space-y-3">
-              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+              <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
                 <span>GUIDING PRINCIPLES</span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
                 Our Core Values
               </h2>
             </div>
@@ -233,7 +239,7 @@ export default function AboutPage() {
                     className="p-6 rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-baho-navy/20 hover:shadow-md transition-all space-y-4"
                   >
                     <div className="w-12 h-12 rounded-xl bg-baho-navy text-white flex items-center justify-center shadow-sm">
-                      <Icon className="w-6 h-6" />
+                      <Icon className="w-6 h-6" strokeWidth={1.75} />
                     </div>
                     <h3 className="text-lg font-bold text-baho-navy-dark tracking-tight">
                       {value.title}
@@ -249,15 +255,15 @@ export default function AboutPage() {
         </section>
 
         {/* Section 5: Corporate Journey & Milestones */}
-        <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-b border-slate-200/70">
+        <section className="py-16 lg:py-20 bg-[#f4f7fa] border-b border-slate-200/70">
           <Container className="space-y-12">
             <div className="space-y-3">
-              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+              <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
                 <span>MILESTONES</span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
                 Our Journey So Far
               </h2>
             </div>
@@ -268,7 +274,7 @@ export default function AboutPage() {
                   key={idx}
                   className="bg-white p-6 rounded-2xl border border-slate-200/80 space-y-3 relative shadow-sm"
                 >
-                  <div className="inline-block px-3 py-1 bg-baho-gold/15 text-baho-gold font-extrabold text-xs rounded-full">
+                  <div className="inline-block px-3 py-1 bg-baho-navy/10 text-baho-navy font-extrabold text-xs rounded-full">
                     {item.year}
                   </div>
                   <h3 className="text-lg font-bold text-baho-navy-dark tracking-tight">
@@ -284,15 +290,15 @@ export default function AboutPage() {
         </section>
 
         {/* Section 6: Leadership Team */}
-        <section id="team" className="py-10 sm:py-12 lg:py-14 bg-white border-b border-slate-200/70">
+        <section id="team" className="py-16 lg:py-20 bg-white border-b border-slate-200/70">
           <Container className="space-y-12">
             <div className="space-y-3">
-              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+              <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
                 <span>LEADERSHIP</span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
                 Executive Leadership Team
               </h2>
               <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed max-w-2xl">
@@ -300,43 +306,27 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {LEADERSHIP_TEAM.map((member, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-baho-navy/30 hover:-translate-y-1 transition-all duration-300 flex flex-col group"
+                  className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group"
                 >
-                  <div className="relative aspect-[4/3] bg-gradient-to-b from-blue-50/80 to-slate-100/90 flex items-center justify-center overflow-hidden">
-                    {member.image ? (
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-24 h-24 rounded-full bg-blue-100 text-baho-navy flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                        <User className="w-12 h-12 stroke-[1.5]" />
-                      </div>
-                    )}
+                  <div className="relative aspect-[4/3] bg-slate-100/90 flex items-center justify-center overflow-hidden border-b border-slate-100">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center text-baho-navy transition-transform group-hover:scale-105 duration-300">
+                      <UserRound className="w-16 h-16 sm:w-20 sm:h-20 fill-current" strokeWidth={0} />
+                    </div>
                   </div>
                   <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4 bg-white border-t border-slate-100">
-                    <div className="space-y-1.5">
-                      <h3 className="text-xl font-bold text-baho-navy-dark tracking-tight leading-snug group-hover:text-baho-navy transition-colors">
-                        {member.name}
-                      </h3>
-                      <p className="text-sm font-semibold text-slate-700">
+                    <div className="space-y-1">
+                      <h3 className="text-lg sm:text-xl font-bold text-baho-navy-dark tracking-tight leading-snug">
                         {member.role}
-                      </p>
+                      </h3>
                     </div>
 
-                    <div className="pt-3 border-t border-slate-100">
-                      <span className="text-xs font-bold text-baho-gold tracking-wider uppercase">
-                        {member.role.includes("CEO")
-                          ? "EXECUTIVE MANAGEMENT"
-                          : member.role.includes("Operations")
-                            ? "OPERATIONS & BUSINESS"
-                            : "FINANCE & ADMINISTRATION"}
+                    <div>
+                      <span className="text-xs font-bold text-blue-600 tracking-wider uppercase">
+                        {member.department}
                       </span>
                     </div>
                   </div>
