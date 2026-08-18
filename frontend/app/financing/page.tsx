@@ -148,27 +148,27 @@ export default function FinancingPage() {
 
       <main className="flex-1">
         {/* Section 1: Hero Banner */}
-        <section className="bg-[#0B1B33] text-white py-10 sm:py-12 lg:py-14 relative overflow-hidden border-b border-slate-800">
+        <section className="bg-[#0B1B33] text-white py-16 lg:py-20 relative overflow-hidden border-b border-slate-800">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
-          <Container className="relative z-10 space-y-3">
-            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+          <Container className="relative z-10 space-y-4">
+            <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-8 h-0.5 bg-baho-navy inline-block" />
               <span>BAHO FINANCIAL</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white leading-tight">
               Financing Products
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-3xl font-normal leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-300 max-w-3xl font-normal leading-relaxed">
               Flexible, transparent financing solutions designed around your needs.
             </p>
           </Container>
         </section>
 
         {/* Section 2: Interactive Tabs & Products Grid */}
-        <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-b border-slate-200/70">
+        <section className="py-16 lg:py-20 bg-white border-b border-slate-200/70">
           <Container className="space-y-10">
             {/* Filter Navigation Tabs */}
             <div className="flex items-center space-x-2 sm:space-x-3 overflow-x-auto pb-4 pt-1 border-b border-slate-200 scrollbar-none">
@@ -260,7 +260,7 @@ export default function FinancingPage() {
                       key={product.id}
                       id={product.slug}
                       onClick={() => setActiveTab(product.slug)}
-                      className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-baho-navy/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+                      className="bg-white rounded-2xl p-7 border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between group cursor-pointer"
                     >
                       <div className="space-y-5">
                         {/* Category Icon Badge & Processing Time Tag */}
@@ -268,7 +268,7 @@ export default function FinancingPage() {
                           <div
                             className={`w-14 h-14 rounded-2xl ${meta.theme.iconBg} ${meta.theme.iconColor} flex items-center justify-center p-3 transition-transform group-hover:scale-110`}
                           >
-                            <IconComponent className="w-7 h-7" />
+                            <IconComponent className="w-7 h-7" strokeWidth={1.75} />
                           </div>
                           <span className="text-[11px] font-bold tracking-wide uppercase px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200/80">
                             {meta.badge}
@@ -295,7 +295,7 @@ export default function FinancingPage() {
                               <div
                                 className={`p-1 rounded-full ${meta.theme.checkColor} flex-shrink-0`}
                               >
-                                <Check className="w-3.5 h-3.5" />
+                                <Check className="w-3.5 h-3.5" strokeWidth={2.2} />
                               </div>
                               <span
                                 className={
@@ -461,12 +461,12 @@ export default function FinancingPage() {
           <section className="py-10 sm:py-12 lg:py-14 bg-white border-b border-slate-200/70">
             <Container className="space-y-8">
               <div className="space-y-3">
-                <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                  <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+                <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                  <span className="w-8 h-0.5 bg-baho-navy inline-block" />
                   <span>REQUIRED DOCUMENTS</span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
                   Loan Requirements
                 </h2>
               </div>
@@ -492,13 +492,13 @@ export default function FinancingPage() {
         <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-b border-slate-200/70">
           <Container className="max-w-4xl space-y-12">
             <div className="text-center space-y-3">
-              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+              <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
                 <span>QUESTIONS & ANSWERS</span>
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
               </div>
 
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-baho-navy-dark tracking-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight">
                 Frequently Asked Questions
               </h2>
             </div>

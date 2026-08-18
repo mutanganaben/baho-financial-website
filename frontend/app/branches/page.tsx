@@ -94,36 +94,36 @@ export default function BranchesPage() {
 
       <main className="flex-1">
         {/* Section 1: Hero Banner */}
-        <section className="bg-[#0B1B33] text-white py-10 sm:py-12 lg:py-14 relative overflow-hidden border-b border-slate-800">
+        <section className="bg-[#0B1B33] text-white py-16 lg:py-20 relative overflow-hidden border-b border-slate-800">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
-          <Container className="relative z-10 space-y-3">
-            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+          <Container className="relative z-10 space-y-4">
+            <div className="inline-flex items-center space-x-3 text-slate-300 font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-8 h-0.5 bg-slate-300 inline-block" />
               <span>BAHO FINANCIAL</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
-              Our Branches
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
+              Our Branch Network
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-3xl font-normal leading-relaxed">
-              Regional Branches serving communities across Rwanda.
+            <p className="text-sm sm:text-base text-slate-300 max-w-3xl font-normal leading-relaxed">
+              Serving communities across Kigali, Kamonyi, and Nyagatare with dedicated credit officers.
             </p>
           </Container>
         </section>
 
         {/* Section 2: Branch Directory Cards Grid */}
-        <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-b border-slate-200/70">
+        <section className="py-16 lg:py-20 bg-white border-b border-slate-200/70">
           <Container className="space-y-12">
             <div className="text-center max-w-3xl mx-auto space-y-3">
-              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+              <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
                 <span>NATIONWIDE NETWORK</span>
-                <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
               </div>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
                 Find Your Nearest BAHO Branch
               </h2>
             </div>
@@ -190,9 +190,9 @@ export default function BranchesPage() {
                           <div className="flex items-center justify-between">
                             <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
                               {isHq ? (
-                                <Building2 className="w-6 h-6" />
+                                <Building2 className="w-6 h-6" strokeWidth={1.75} />
                               ) : (
-                                <MapPin className="w-6 h-6" />
+                                <MapPin className="w-6 h-6" strokeWidth={1.75} />
                               )}
                             </div>
 
@@ -216,7 +216,7 @@ export default function BranchesPage() {
                           <div className="space-y-3 pt-2 text-sm">
                             {/* Address */}
                             <div className="flex items-start space-x-3 text-slate-600">
-                              <MapPin className="w-4 h-4 text-baho-gold flex-shrink-0 mt-0.5" />
+                              <MapPin className="w-4 h-4 text-baho-gold flex-shrink-0 mt-0.5" strokeWidth={2} />
                               <span className="font-medium text-slate-700 leading-snug">
                                 {branch.address} ({branch.district})
                               </span>
@@ -224,7 +224,7 @@ export default function BranchesPage() {
 
                             {/* Phone */}
                             <div className="flex items-center space-x-3 text-slate-600">
-                              <Phone className="w-4 h-4 text-baho-gold flex-shrink-0" />
+                              <Phone className="w-4 h-4 text-baho-gold flex-shrink-0" strokeWidth={2} />
                               <a
                                 href={`tel:${branch.phone.replace(/\s+/g, "")}`}
                                 className="font-semibold text-baho-navy hover:text-baho-gold hover:underline transition-colors"
@@ -237,7 +237,7 @@ export default function BranchesPage() {
                             {/* Email (only rendered if official email exists) */}
                             {branch.email && (
                               <div className="flex items-center space-x-3 text-slate-600">
-                                <Mail className="w-4 h-4 text-baho-gold flex-shrink-0" />
+                                <Mail className="w-4 h-4 text-baho-gold flex-shrink-0" strokeWidth={2} />
                                 <a
                                   href={`mailto:${branch.email}`}
                                   className="font-medium text-baho-navy hover:text-baho-gold hover:underline truncate transition-colors"
@@ -250,7 +250,7 @@ export default function BranchesPage() {
 
                             {/* Operating Hours */}
                             <div className="flex items-center space-x-3 text-slate-500">
-                              <Clock className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                              <Clock className="w-4 h-4 text-slate-400 flex-shrink-0" strokeWidth={2} />
                               <span className="font-medium text-xs text-slate-600">
                                 {branch.openingHours}
                               </span>

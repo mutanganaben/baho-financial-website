@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
             </div>
           </Link>
           <p className="text-slate-400 text-sm leading-relaxed max-w-sm font-medium">
-            Empowering businesses and individuals across Rwanda with fast, accessible, and transparent credit solutions.
+            BNR-licensed Non-Deposit Financial Institution (NDFI) delivering fast, accessible credit solutions for businesses and individuals across Rwanda.
           </p>
         </div>
 
@@ -65,11 +65,11 @@ export const Footer: React.FC = () => {
           <h4 className="text-white text-base font-bold tracking-wide">Headquarters</h4>
           <div className="space-y-2.5 text-sm text-slate-400">
             <div className="flex items-start space-x-2.5">
-              <MapPin className="w-4 h-4 text-baho-gold flex-shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-baho-gold flex-shrink-0 mt-0.5" strokeWidth={2} />
               <span>Kabuga, Gasabo District, Kigali, Rwanda</span>
             </div>
             <div className="flex items-center space-x-2.5">
-              <Phone className="w-4 h-4 text-baho-gold flex-shrink-0" />
+              <Phone className="w-4 h-4 text-baho-gold flex-shrink-0" strokeWidth={2} />
               <span>+250 788 381 721</span>
             </div>
           </div>

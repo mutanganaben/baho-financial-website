@@ -111,39 +111,39 @@ export default function ContactPage() {
 
       <main className="flex-1">
         {/* Section 1: Hero Banner */}
-        <section className="bg-[#0B1B33] text-white py-10 sm:py-12 lg:py-14 relative overflow-hidden border-b border-slate-800">
+        <section className="bg-[#0B1B33] text-white py-16 lg:py-20 relative overflow-hidden border-b border-slate-800">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
-          <Container className="relative z-10 space-y-3">
-            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+          <Container className="relative z-10 space-y-4">
+            <div className="inline-flex items-center space-x-3 text-slate-300 font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-8 h-0.5 bg-slate-300 inline-block" />
               <span>BAHO FINANCIAL</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
               Contact Us
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-3xl font-normal leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-300 max-w-3xl font-normal leading-relaxed">
               We&apos;re here to help. Reach out to our team any time.
             </p>
           </Container>
         </section>
 
         {/* Section 2: Contact Form & HQ Info Grid */}
-        <section className="py-10 sm:py-12 lg:py-14 bg-white border-b border-slate-200/70">
+        <section className="py-16 lg:py-20 bg-white border-b border-slate-200/70">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
               
               {/* Left Column: Send Us a Message */}
               <div className="lg:col-span-7 space-y-8">
                 <div className="space-y-3">
-                  <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-                    <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+                  <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                    <span className="w-8 h-0.5 bg-baho-navy inline-block" />
                     <span>GET IN TOUCH</span>
                   </div>
 
-                  <h2 className="text-3xl sm:text-4xl font-extrabold text-baho-navy-dark tracking-tight">
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight">
                     Send Us a Message
                   </h2>
                 </div>
@@ -327,7 +327,7 @@ export default function ContactPage() {
                       ) : (
                         <span className="flex items-center">
                           Send Message
-                          <Send className="w-4 h-4 ml-2" />
+                          <Send className="w-4 h-4 ml-2" strokeWidth={2} />
                         </span>
                       )}
                     </Button>
@@ -353,7 +353,7 @@ export default function ContactPage() {
                   {/* Head Office */}
                   <div className="flex items-start space-x-4 p-5 rounded-2xl bg-slate-50 border border-slate-100">
                     <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6" />
+                      <MapPin className="w-6 h-6" strokeWidth={1.75} />
                     </div>
                     <div className="space-y-1 pt-0.5">
                       <h3 className="text-base font-extrabold text-baho-navy-dark">
@@ -368,7 +368,7 @@ export default function ContactPage() {
                   {/* Main Phone */}
                   <div className="flex items-start space-x-4 p-5 rounded-2xl bg-slate-50 border border-slate-100">
                     <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-6 h-6" />
+                      <Phone className="w-6 h-6" strokeWidth={1.75} />
                     </div>
                     <div className="space-y-1 pt-0.5">
                       <h3 className="text-base font-extrabold text-baho-navy-dark">
@@ -386,7 +386,7 @@ export default function ContactPage() {
                   {/* Working Hours */}
                   <div className="flex items-start space-x-4 p-5 rounded-2xl bg-slate-50 border border-slate-100">
                     <div className="w-12 h-12 rounded-2xl bg-slate-200/80 text-slate-700 flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-6 h-6" />
+                      <Clock className="w-6 h-6" strokeWidth={1.75} />
                     </div>
                     <div className="space-y-1 pt-0.5">
                       <h3 className="text-base font-extrabold text-baho-navy-dark">

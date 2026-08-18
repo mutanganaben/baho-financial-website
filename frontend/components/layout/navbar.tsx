@@ -68,7 +68,7 @@ export const Navbar: React.FC = () => {
               className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none"
               aria-label="Toggle Navigation Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" strokeWidth={2} /> : <Menu className="w-6 h-6" strokeWidth={2} />}
             </button>
           </div>
         </Container>
@@ -84,7 +84,7 @@ export const Navbar: React.FC = () => {
                 className="flex items-center justify-between px-3 py-2.5 rounded-lg text-base font-semibold text-slate-800 hover:bg-slate-50 hover:text-baho-navy transition-all"
               >
                 <span>{link.label}</span>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
+                <ChevronRight className="w-4 h-4 text-slate-400" strokeWidth={2} />
               </Link>
             ))}
             <div className="pt-3 border-t border-slate-100">

@@ -487,16 +487,16 @@ export default function ApplyPage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
           <Container className="relative z-10 space-y-3">
-            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+            <div className="inline-flex items-center space-x-3 text-slate-300 font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-8 h-0.5 bg-slate-300 inline-block" />
               <span>BAHO FINANCIAL / ONLINE PORTAL</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
               Apply for a Loan
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-3xl font-normal leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-300 max-w-3xl font-normal leading-relaxed">
               Complete your online application in minutes for rapid 24-hour credit evaluation.
             </p>
           </Container>
