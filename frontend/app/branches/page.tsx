@@ -98,9 +98,9 @@ export default function BranchesPage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
           <Container className="relative z-10 space-y-4">
-            <div className="inline-flex items-center space-x-3 text-slate-300 font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-slate-300 inline-block" />
-              <span>BAHO FINANCIAL</span>
+            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-6 h-0.5 bg-baho-gold inline-block" />
+              <span>BAHO FINANCIAL LTD.</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
@@ -117,10 +117,10 @@ export default function BranchesPage() {
         <section className="py-16 lg:py-20 bg-white border-b border-slate-200/70">
           <Container className="space-y-12">
             <div className="text-center max-w-3xl mx-auto space-y-3">
-              <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
+              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <span className="w-6 h-0.5 bg-baho-gold inline-block" />
                 <span>NATIONWIDE NETWORK</span>
-                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
+                <span className="w-6 h-0.5 bg-baho-gold inline-block" />
               </div>
 
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
@@ -181,7 +181,7 @@ export default function BranchesPage() {
                         onClick={() => setSelectedBranchCode(branch.code)}
                         className={`bg-white rounded-3xl p-6 sm:p-7 border cursor-pointer transition-all duration-200 flex flex-col justify-between space-y-6 ${
                           isSelected
-                            ? "border-blue-600 ring-2 ring-blue-600/20 shadow-lg scale-[1.02]"
+                            ? "border-baho-gold ring-2 ring-baho-gold/20 shadow-lg scale-[1.02]"
                             : "border-slate-200/80 shadow-sm hover:shadow-md hover:border-slate-300"
                         }`}
                       >
@@ -261,7 +261,7 @@ export default function BranchesPage() {
                         {/* Bottom Action Button */}
                         <div className="pt-2 border-t border-slate-100">
                           <Button
-                            variant={isSelected ? "primary" : "outline"}
+                            variant={isSelected ? "gold" : "outline"}
                             size="sm"
                             className="w-full justify-center text-xs font-bold"
                             onClick={(e) => {

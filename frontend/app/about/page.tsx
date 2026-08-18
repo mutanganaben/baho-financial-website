@@ -97,8 +97,9 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
           <Container className="relative z-10 space-y-4">
-            <div className="text-slate-300 font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span>Who we are</span>
+            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-6 h-0.5 bg-baho-gold inline-block" />
+              <span>BAHO FINANCIAL LTD.</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight max-w-4xl">
@@ -117,7 +118,8 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               {/* Left Column: Story Content */}
               <div className="lg:col-span-7 space-y-6">
-                <div className="text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+                  <span className="w-6 h-0.5 bg-baho-gold inline-block" />
                   <span>ABOUT BAHO FINANCIAL LTD.</span>
                 </div>
 

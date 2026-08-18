@@ -152,9 +152,9 @@ export default function FinancingPage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
           <Container className="relative z-10 space-y-4">
-            <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-baho-navy inline-block" />
-              <span>BAHO FINANCIAL</span>
+            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-6 h-0.5 bg-baho-gold inline-block" />
+              <span>BAHO FINANCIAL LTD.</span>
             </div>
 
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white leading-tight">
@@ -461,8 +461,8 @@ export default function FinancingPage() {
           <section className="py-10 sm:py-12 lg:py-14 bg-white border-b border-slate-200/70">
             <Container className="space-y-8">
               <div className="space-y-3">
-                <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
-                  <span className="w-8 h-0.5 bg-baho-navy inline-block" />
+                <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+                  <span className="w-6 h-0.5 bg-baho-gold inline-block" />
                   <span>REQUIRED DOCUMENTS</span>
                 </div>
 
@@ -492,10 +492,10 @@ export default function FinancingPage() {
         <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-b border-slate-200/70">
           <Container className="max-w-4xl space-y-12">
             <div className="text-center space-y-3">
-              <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
-                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
+              <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+                <span className="w-6 h-0.5 bg-baho-gold inline-block" />
                 <span>QUESTIONS & ANSWERS</span>
-                <span className="w-8 h-0.5 bg-baho-navy inline-block" />
+                <span className="w-6 h-0.5 bg-baho-gold inline-block" />
               </div>
 
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight">

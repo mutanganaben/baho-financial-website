@@ -115,9 +115,9 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
 
           <Container className="relative z-10 space-y-4">
-            <div className="inline-flex items-center space-x-3 text-slate-300 font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-slate-300 inline-block" />
-              <span>BAHO FINANCIAL</span>
+            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-6 h-0.5 bg-baho-gold inline-block" />
+              <span>BAHO FINANCIAL LTD.</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
@@ -138,8 +138,8 @@ export default function ContactPage() {
               {/* Left Column: Send Us a Message */}
               <div className="lg:col-span-7 space-y-8">
                 <div className="space-y-3">
-                  <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
-                    <span className="w-8 h-0.5 bg-baho-navy inline-block" />
+                  <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+                    <span className="w-6 h-0.5 bg-baho-gold inline-block" />
                     <span>GET IN TOUCH</span>
                   </div>
 
@@ -352,7 +352,7 @@ export default function ContactPage() {
                 <div className="space-y-6">
                   {/* Head Office */}
                   <div className="flex items-start space-x-4 p-5 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-50 text-baho-gold flex items-center justify-center flex-shrink-0">
                       <MapPin className="w-6 h-6" strokeWidth={1.75} />
                     </div>
                     <div className="space-y-1 pt-0.5">
@@ -367,7 +367,7 @@ export default function ContactPage() {
 
                   {/* Main Phone */}
                   <div className="flex items-start space-x-4 p-5 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-2xl bg-blue-50 text-baho-navy flex items-center justify-center flex-shrink-0">
                       <Phone className="w-6 h-6" strokeWidth={1.75} />
                     </div>
                     <div className="space-y-1 pt-0.5">
@@ -376,7 +376,7 @@ export default function ContactPage() {
                       </h3>
                       <a
                         href="tel:+250788381721"
-                        className="text-sm font-bold text-blue-600 hover:underline block"
+                        className="text-sm font-bold text-baho-navy hover:text-baho-gold hover:underline block transition-colors"
                       >
                         +250 788 381 721
                       </a>

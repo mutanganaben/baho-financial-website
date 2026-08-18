@@ -1,119 +1,84 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Container } from "@/components/ui/container";
-import { ArrowRight, User } from "lucide-react";
+import { ArrowRight, UserRound } from "lucide-react";
 
 export interface TeamMember {
   id: string;
-  name: string;
   role: string;
   department: string;
-  bio?: string;
-  image?: string;
 }
 
 export const TEAM_MEMBERS: TeamMember[] = [
   {
-    id: "joshua-intwari",
-    name: "Joshua Intwari",
-    role: "Managing Director & CEO",
-    department: "EXECUTIVE MANAGEMENT",
-    bio: "Over 15 years of senior executive experience in Rwandan banking, microfinance risk management, and SME growth strategy.",
-    image: "",
-  },
-  {
-    id: "jacky",
-    name: "Jacky",
+    id: "operations-business-manager",
     role: "Operations and Business Manager",
-    department: "OPERATIONS AND BUSINESS",
-    bio: "Expert in retail lending, credit underwriting, and branch operations, driving 90%+ portfolio quality across all regions.",
-    image: "",
+    department: "OPERATIONS AND BUSINESS MANAGER",
   },
   {
-    id: "emmanuel",
-    name: "Emmanuel",
-    role: "Finance & Administration Manager",
+    id: "finance-administration",
+    role: "Finance & Administration",
     department: "FINANCE & ADMINISTRATION",
-    bio: "Specialist in regulatory compliance, NDFI financial governance, and financial consumer protection under BNR guidelines.",
-    image: "",
+  },
+  {
+    id: "managing-director",
+    role: "Managing Director",
+    department: "MD",
   },
 ];
 
 export const TeamPreview: React.FC = () => {
-  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
-
-  const handleImageError = (id: string) => {
-    setImageErrors((prev) => ({ ...prev, [id]: true }));
-  };
-
   return (
-    <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-t border-b border-slate-200/70 overflow-hidden">
+    <section className="py-16 lg:py-20 bg-slate-50/70 border-t border-b border-slate-200/70 overflow-hidden">
       <Container>
-        {/* Section Header with Title & View all Button */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 lg:mb-10 gap-6">
+        {/* Section Header with Title & All Team Link */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 lg:mb-12 gap-6">
           <div className="space-y-3">
-            <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
-              <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+            <div className="inline-flex items-center space-x-3 text-baho-navy font-bold text-xs sm:text-sm tracking-wider uppercase">
+              <span className="w-8 h-0.5 bg-baho-navy inline-block" />
               <span>TEAM</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
-              Meet our team
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-baho-navy-dark tracking-tight leading-tight">
+              Meet Our Team
             </h2>
           </div>
 
-          <div>
-            <Link
-              href="/about#team"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-baho-navy hover:bg-baho-navy-dark text-white font-bold text-sm sm:text-base transition-all duration-200 shadow-sm hover:shadow-md group"
-            >
-              <span>View all</span>
-              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
+          <Link
+            href="/about#team"
+            className="inline-flex items-center space-x-2 text-baho-navy hover:text-[#183B6B] font-bold text-base transition-colors group"
+          >
+            <span>View all team</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+          </Link>
         </div>
 
         {/* Team Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {TEAM_MEMBERS.map((member) => (
             <div
               key={member.id}
-              className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-baho-navy/30 transition-all duration-300 flex flex-col group"
+              className="bg-white rounded-2xl border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group"
             >
-              {/* Card Upper Top Visual Container (styled like the rapid reference) */}
-              <div className="relative aspect-[4/3] bg-gradient-to-b from-blue-50/80 to-slate-100/90 flex items-center justify-center overflow-hidden">
-                {!imageErrors[member.id] && member.image ? (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    onError={() => handleImageError(member.id)}
-                  />
-                ) : (
-                  <div className="w-24 h-24 rounded-full bg-blue-100 text-baho-navy flex items-center justify-center">
-                    <User className="w-12 h-12 stroke-[1.5]" />
-                  </div>
-                )}
+              {/* Card Upper Top Visual Container */}
+              <div className="relative aspect-[4/3] bg-slate-100/90 flex items-center justify-center overflow-hidden border-b border-slate-100">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center text-baho-navy transition-transform group-hover:scale-105 duration-300">
+                  <UserRound className="w-16 h-16 sm:w-20 sm:h-20 fill-current" strokeWidth={0} />
+                </div>
               </div>
 
               {/* Card Details Footer */}
-              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4 bg-white border-t border-slate-100">
-                <div className="space-y-1.5">
-                  <h3 className="text-xl font-bold text-baho-navy-dark tracking-tight leading-snug group-hover:text-baho-navy transition-colors">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm font-semibold text-slate-700">
+              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4 bg-white">
+                <div className="space-y-1">
+                  <h3 className="text-base sm:text-lg font-bold text-baho-navy-dark tracking-tight leading-snug">
                     {member.role}
-                  </p>
+                  </h3>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100">
-                  <span className="text-xs font-bold text-baho-blue tracking-wider uppercase">
+                <div>
+                  <span className="text-xs font-bold text-baho-navy tracking-wider uppercase">
                     {member.department}
                   </span>
                 </div>
