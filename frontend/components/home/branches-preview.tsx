@@ -46,10 +46,10 @@ const BRANCHES: BranchInfo[] = [
 
 export const BranchesPreview: React.FC = () => {
   return (
-    <section className="py-10 sm:py-12 lg:py-14 bg-white text-slate-900 overflow-hidden">
+    <section className="py-16 lg:py-20 bg-white text-slate-900 overflow-hidden border-b border-slate-200/60">
       <Container>
         {/* Section Header with Title & All Branches Link */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 lg:mb-12 gap-6">
           <div className="space-y-3">
             <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
               <span className="w-8 h-0.5 bg-baho-gold inline-block" />
@@ -66,7 +66,7 @@ export const BranchesPreview: React.FC = () => {
             className="inline-flex items-center space-x-2 text-baho-navy hover:text-baho-gold font-bold text-base transition-colors group"
           >
             <span>All Branches</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
           </Link>
         </div>
 
@@ -79,7 +79,7 @@ export const BranchesPreview: React.FC = () => {
             >
               {/* Location Pin Badge */}
               <div className="w-14 h-14 rounded-2xl bg-sky-50 text-blue-600 flex items-center justify-center p-3.5 group-hover:scale-110 transition-transform">
-                <MapPin className="w-7 h-7" />
+                <MapPin className="w-7 h-7" strokeWidth={1.75} />
               </div>
 
               {/* Branch Information */}
@@ -98,7 +98,7 @@ export const BranchesPreview: React.FC = () => {
                   href={`tel:${branch.phone.replace(/\s+/g, "")}`}
                   className="inline-flex items-center space-x-2 text-sm font-bold text-baho-navy hover:text-baho-gold transition-colors"
                 >
-                  <Phone className="w-4 h-4" />
+                  <Phone className="w-4 h-4" strokeWidth={2} />
                   <span>{branch.phone}</span>
                 </a>
               </div>

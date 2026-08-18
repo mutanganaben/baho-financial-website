@@ -96,20 +96,21 @@ export const FinancingProducts: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-10 sm:py-12 lg:py-14 bg-slate-50 border-t border-b border-slate-200/70">
+    <section className="py-16 lg:py-20 bg-slate-50/70 border-t border-b border-slate-200/70">
       <Container>
         {/* Section Header */}
-        <div className="text-left max-w-3xl space-y-3 mb-8">
-          <div className="text-baho-navy font-bold text-xs sm:text-sm tracking-widest uppercase">
-            LOAN PRODUCTS
+        <div className="text-left max-w-3xl space-y-3 mb-10 lg:mb-12">
+          <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase">
+            <span className="w-8 h-0.5 bg-baho-gold inline-block" />
+            <span>LOAN PRODUCTS</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-baho-navy-dark tracking-tight leading-tight">
-            Our loan products
+            Our Loan Products
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-            We make the whole lending process super easy and fast.
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-2xl">
+            Flexible financial solutions designed for fast approval and transparent terms to support your growth.
           </p>
         </div>
 
@@ -131,7 +132,7 @@ export const FinancingProducts: React.FC = () => {
         ) : errorMessage ? (
           <div className="text-center p-6 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800 text-sm max-w-md mx-auto flex flex-col items-center justify-center space-y-3">
             <div className="flex items-center space-x-2">
-              <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+              <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0" strokeWidth={2} />
               <span>{errorMessage}</span>
             </div>
             <button
@@ -139,7 +140,7 @@ export const FinancingProducts: React.FC = () => {
               onClick={loadProducts}
               className="px-4 py-1.5 text-xs font-bold bg-white border border-rose-200 hover:bg-rose-100 rounded-lg transition-colors text-rose-700 inline-flex items-center space-x-1.5 shadow-sm"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
+              <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
               <span>Retry Loading</span>
             </button>
           </div>
@@ -167,18 +168,17 @@ export const FinancingProducts: React.FC = () => {
               ];
 
               return (
-                <Link
+                <div
                   key={product.id}
-                  href={`/financing#${product.slug}`}
-                  className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group block"
+                  className="bg-white rounded-2xl p-7 border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
                 >
                   <div className="space-y-5">
                     {/* Category Icon Badge & Processing Time Tag */}
                     <div className="flex items-center justify-between">
                       <div
-                        className={`w-14 h-14 rounded-2xl ${meta.theme.iconBg} ${meta.theme.iconColor} flex items-center justify-center p-3 transition-transform group-hover:scale-110`}
+                        className={`w-14 h-14 rounded-2xl ${meta.theme.iconBg} ${meta.theme.iconColor} flex items-center justify-center p-3`}
                       >
-                        <IconComponent className="w-7 h-7" />
+                        <IconComponent className="w-7 h-7" strokeWidth={1.75} />
                       </div>
                       <span className="text-[11px] font-bold tracking-wide uppercase px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200/80">
                         {meta.badge}
@@ -186,7 +186,7 @@ export const FinancingProducts: React.FC = () => {
                     </div>
 
                     {/* Product Title */}
-                    <h3 className="text-2xl font-bold text-baho-navy-dark tracking-tight group-hover:text-baho-navy transition-colors">
+                    <h3 className="text-2xl font-bold text-baho-navy-dark tracking-tight">
                       {product.name}
                     </h3>
 
@@ -205,7 +205,7 @@ export const FinancingProducts: React.FC = () => {
                           <div
                             className={`p-1 rounded-full ${meta.theme.checkColor} flex-shrink-0`}
                           >
-                            <Check className="w-3.5 h-3.5" />
+                            <Check className="w-3.5 h-3.5" strokeWidth={2.2} />
                           </div>
                           <span
                             className={
@@ -220,7 +220,7 @@ export const FinancingProducts: React.FC = () => {
                       ))}
                     </div>
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>

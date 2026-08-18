@@ -6,89 +6,52 @@ import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 
-export interface HeroSlide {
-  id: string;
-  tagline: string;
-  title: string;
-  subtitle: string;
-  primaryCtaText: string;
-  primaryCtaLink: string;
-  secondaryCtaText: string;
-  secondaryCtaLink: string;
-  backgroundImage: string;
-}
+const BACKGROUND_IMAGES = [
+  { id: "bg-1", src: "/images/Baho1.jpeg", alt: "Baho Financial Branch 1" },
+  { id: "bg-2", src: "/images/Baho2.jpeg", alt: "Baho Financial Branch 2" },
+  { id: "bg-3", src: "/images/Baho3.jpeg", alt: "Baho Financial Branch 3" },
+  { id: "bg-4", src: "/images/Baho4.jpeg", alt: "Baho Financial Branch 4" },
+];
 
-const HERO_SLIDES: HeroSlide[] = [
-  {
-    id: "slide-1",
-    tagline: "BAHO FINANCIAL LTD.",
-    title: "Financing Your Future, Today.",
-    subtitle: "Fast, flexible financial solutions for individuals and businesses across Rwanda.",
-    primaryCtaText: "Apply Now",
-    primaryCtaLink: "/apply",
-    secondaryCtaText: "Our Products",
-    secondaryCtaLink: "/financing",
-    backgroundImage: "/images/Baho1.jpeg",
-  },
-  {
-    id: "slide-2",
-    tagline: "BAHO FINANCIAL LTD.",
-    title: "Grow Your Business With Confidence.",
-    subtitle: "Access the capital you need to expand, invest, and achieve your business goals.",
-    primaryCtaText: "Apply Now",
-    primaryCtaLink: "/apply",
-    secondaryCtaText: "Our Products",
-    secondaryCtaLink: "/financing",
-    backgroundImage: "/images/Baho2.jpeg",
-  },
-  {
-    id: "slide-3",
-    tagline: "BAHO FINANCIAL LTD.",
-    title: "Apply in Minutes, Approved in 24 Hours.",
-    subtitle: "Our streamlined process means less waiting and more doing what matters.",
-    primaryCtaText: "Apply Now",
-    primaryCtaLink: "/apply",
-    secondaryCtaText: "Our Products",
-    secondaryCtaLink: "/financing",
-    backgroundImage: "/images/Baho3.jpeg",
-  },
-  {
-    id: "slide-4",
-    tagline: "BAHO FINANCIAL LTD.",
-    title: "Trusted by Clients Across the Country.",
-    subtitle: "Join our growing community of clients who are transforming their lives with BAHO.",
-    primaryCtaText: "Apply Now",
-    primaryCtaLink: "/apply",
-    secondaryCtaText: "Our Products",
-    secondaryCtaLink: "/financing",
-    backgroundImage: "/images/Baho4.jpeg",
-  },
+const HERO_CONTENT = {
+  tagline: "BAHO FINANCIAL LTD.",
+  title: "Straightforward lending for people and businesses in Rwanda.",
+  subtitle:
+    "BAHO Financial offers clear loan terms, simple requirements, and fast decisions for eligible clients.",
+  primaryCtaText: "Apply Now",
+  primaryCtaLink: "/apply",
+  secondaryCtaText: "Our Products",
+  secondaryCtaLink: "/financing",
+};
+
+const HERO_STATS = [
+  { value: "4", label: "Active Branches" },
+  { value: "<24h", label: "Loan Approval" },
+  { value: "10%", label: "Monthly Interest" },
 ];
 
 export const HeroSlider: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Auto-advance slide every 5 seconds (5000ms) with Ken Burns & Fade Effect
+  // Auto-advance background image every 5 seconds (5000ms) with Ken Burns Zoom & Fade Effect
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % HERO_SLIDES.length);
+      setActiveIndex((prevIndex) => (prevIndex + 1) % BACKGROUND_IMAGES.length);
     }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
-  const activeSlide = HERO_SLIDES[activeIndex];
-
   return (
-    <section className="relative w-full h-[440px] sm:h-[480px] lg:h-[510px] overflow-hidden bg-baho-navy-dark text-white flex items-start pt-14 sm:pt-16 lg:pt-20">
+    <section className="relative w-full overflow-hidden bg-baho-navy-dark text-white py-16 sm:py-20 lg:py-24 min-h-[540px] sm:min-h-[600px] flex items-center">
       {/* Background Stacked Images with Ken Burns (Zoom) and Smooth 1.5s Crossfade */}
       <div className="absolute inset-0 z-0">
-        {HERO_SLIDES.map((slide, idx) => {
+        {BACKGROUND_IMAGES.map((img, idx) => {
           const isActive = idx === activeIndex;
 
           return (
             <div
-              key={slide.id}
+              key={img.id}
               className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${
                 isActive ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
@@ -99,8 +62,8 @@ export const HeroSlider: React.FC = () => {
                 }`}
               >
                 <Image
-                  src={slide.backgroundImage}
-                  alt={slide.title}
+                  src={img.src}
+                  alt={img.alt}
                   fill
                   priority={idx === 0}
                   className="object-cover object-center"
@@ -114,60 +77,76 @@ export const HeroSlider: React.FC = () => {
         <div className="absolute inset-0 z-20 bg-gradient-to-r from-slate-950/90 via-[#0B1B33]/85 to-[#0B1B33]/60 pointer-events-none" />
       </div>
 
-      {/* Fixed Text Content Layer with Subtle Smooth Crossfade */}
+      {/* Fixed Text & Embedded Stats Layer */}
       <Container className="relative z-30">
-        <div className="max-w-3xl space-y-3 sm:space-y-4">
+        <div className="max-w-2xl space-y-3">
           {/* Tagline Badge */}
-          <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs sm:text-sm tracking-wider uppercase transition-opacity duration-700">
-            <span className="w-8 h-0.5 bg-baho-gold inline-block" />
-            <span>{activeSlide.tagline}</span>
+          <div className="inline-flex items-center space-x-3 text-baho-gold font-bold text-xs tracking-wider uppercase">
+            <span className="w-6 h-0.5 bg-baho-gold inline-block" />
+            <span>{HERO_CONTENT.tagline}</span>
           </div>
 
-          {/* Dynamic Headline */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] text-white transition-all duration-700">
-            {activeSlide.title}
+          {/* Fixed Headline */}
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-tight text-white">
+            {HERO_CONTENT.title}
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-base sm:text-lg text-slate-200 font-normal leading-relaxed max-w-2xl transition-all duration-700">
-            {activeSlide.subtitle}
+          {/* Fixed Subtitle */}
+          <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed max-w-xl">
+            {HERO_CONTENT.subtitle}
           </p>
 
           {/* Fixed Action CTA Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-2 sm:pt-3">
-            <Link href={activeSlide.primaryCtaLink}>
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <Link href={HERO_CONTENT.primaryCtaLink}>
               <Button
                 variant="gold"
-                size="lg"
-                className="px-8 py-3.5 text-base font-bold shadow-xl"
+                size="md"
+                className="px-6 py-2.5 text-sm font-semibold shadow-md"
               >
-                {activeSlide.primaryCtaText}
+                {HERO_CONTENT.primaryCtaText}
               </Button>
             </Link>
-            <Link href={activeSlide.secondaryCtaLink}>
+            <Link href={HERO_CONTENT.secondaryCtaLink}>
               <Button
                 variant="outline"
-                size="lg"
-                className="border-white/70 text-white hover:bg-white hover:text-baho-navy px-8 py-3.5 text-base font-semibold backdrop-blur-sm"
+                size="md"
+                className="border-white/70 text-white hover:bg-white hover:text-baho-navy px-6 py-2.5 text-sm font-semibold backdrop-blur-sm"
               >
-                {activeSlide.secondaryCtaText}
+                {HERO_CONTENT.secondaryCtaText}
               </Button>
             </Link>
+          </div>
+
+          {/* Compact Embedded Stats Row */}
+          <div className="pt-4 mt-4 border-t border-white/20 max-w-lg">
+            <div className="grid grid-cols-3 gap-3 text-left">
+              {HERO_STATS.map((stat, idx) => (
+                <div key={idx} className="space-y-0.5">
+                  <div className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                    {stat.value}
+                  </div>
+                  <div className="text-[11px] uppercase text-slate-300 font-medium tracking-wide">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </Container>
 
       {/* Slide Indicators / Pagination Dots */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center space-x-2.5">
-        {HERO_SLIDES.map((_, idx) => (
+      <div className="absolute bottom-4 right-6 z-40 flex items-center space-x-2">
+        {BACKGROUND_IMAGES.map((_, idx) => (
           <button
             key={idx}
             type="button"
             onClick={() => setActiveIndex(idx)}
-            className={`h-2.5 rounded-full transition-all duration-500 ${
+            className={`h-2 rounded-full transition-all duration-500 ${
               activeIndex === idx
-                ? "w-8 bg-baho-gold shadow-md"
-                : "w-2.5 bg-white/40 hover:bg-white/70"
+                ? "w-6 bg-baho-gold shadow-md"
+                : "w-2 bg-white/40 hover:bg-white/70"
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />
