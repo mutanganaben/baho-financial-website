@@ -3,7 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { MapPin, Phone, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MapPin, Phone } from "lucide-react";
 
 export interface BranchInfo {
   id: string;
@@ -61,12 +62,10 @@ export const BranchesPreview: React.FC = () => {
             </h2>
           </div>
 
-          <Link
-            href="/branches"
-            className="inline-flex items-center space-x-2 text-baho-navy hover:text-baho-gold font-bold text-base transition-colors group"
-          >
-            <span>All Branches</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+          <Link href="/branches">
+            <Button className="bg-baho-navy hover:bg-[#16355E] text-white font-bold py-3.5 px-7 rounded-xl shadow-sm text-base">
+              All Branches
+            </Button>
           </Link>
         </div>
 

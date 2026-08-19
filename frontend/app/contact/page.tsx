@@ -134,7 +134,7 @@ export default function ContactPage() {
         <section className="py-16 lg:py-20 bg-white border-b border-slate-200/70">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-              
+
               {/* Left Column: Send Us a Message */}
               <div className="lg:col-span-7 space-y-8">
                 <div className="space-y-3">
@@ -217,11 +217,10 @@ export default function ContactPage() {
                           placeholder="+250 78X XXX XXX"
                           value={formData.phoneNumber}
                           onChange={handlePhoneChange}
-                          className={`w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white transition-all text-sm font-medium ${
-                            fieldErrors.phoneNumber
+                          className={`w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white transition-all text-sm font-medium ${fieldErrors.phoneNumber
                               ? "border-rose-400 ring-1 ring-rose-400"
                               : "border-slate-200"
-                          }`}
+                            }`}
                         />
                         {fieldErrors.phoneNumber && (
                           <p className="text-xs font-semibold text-rose-600 flex items-center pt-0.5">
@@ -300,11 +299,10 @@ export default function ContactPage() {
                             }));
                           }
                         }}
-                        className={`w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white transition-all text-sm font-medium resize-none ${
-                          fieldErrors.message
+                        className={`w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-baho-navy focus:bg-white transition-all text-sm font-medium resize-none ${fieldErrors.message
                             ? "border-rose-400 ring-1 ring-rose-400"
                             : "border-slate-200"
-                        }`}
+                          }`}
                       />
                       {fieldErrors.message && (
                         <p className="text-xs font-semibold text-rose-600 flex items-center pt-0.5">
@@ -394,9 +392,6 @@ export default function ContactPage() {
                       </h3>
                       <p className="text-sm text-slate-600 font-medium">
                         Mon–Fri: 8:30am – 5:00pm
-                      </p>
-                      <p className="text-sm text-slate-600 font-medium">
-                        Sat: 9:00am – 1:00pm
                       </p>
                     </div>
                   </div>

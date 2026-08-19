@@ -3,7 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { ArrowRight, UserRound } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { UserRound } from "lucide-react";
 
 export interface TeamMember {
   id: string;
@@ -46,12 +47,10 @@ export const TeamPreview: React.FC = () => {
             </h2>
           </div>
 
-          <Link
-            href="/about#team"
-            className="inline-flex items-center space-x-2 text-baho-navy hover:text-[#183B6B] font-bold text-base transition-colors group"
-          >
-            <span>View all team</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+          <Link href="/about#team">
+            <Button className="bg-baho-navy hover:bg-[#16355E] text-white font-bold py-3.5 px-7 rounded-xl shadow-sm text-base">
+              View All
+            </Button>
           </Link>
         </div>
 
